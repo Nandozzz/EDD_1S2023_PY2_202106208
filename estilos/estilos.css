@@ -1,0 +1,73 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    
+}
+
+form {
+    background-color: #f2f2f2;
+    border: 0px solid #dddddd;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 5%;
+    max-width: 95%;
+    margin: 0% auto;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 1.2% 2%;
+    margin: 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    padding: 1.2% 2%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.container {
+    padding: 1.6%;
+}
+
+.container2 {
+    padding-top: 1.6%;
+    display: flex;
+    justify-content: center;
+}
+
+
+span.psw {
+    float: right;
+    padding-top: 1.6%;
+}
+
+span.psw2 {
+    float: left;
+    padding-top: 1.6%;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.pie_pagina{
+    background-color: #f2f2f2;
+}
