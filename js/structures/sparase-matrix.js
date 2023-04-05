@@ -291,4 +291,27 @@ class SparseMatrix{
 
         return nodes + "\n" + rank + "\n" + conn;
     }
+
+
+    actualizar(x, y, newValue){
+        let temp = this.head.down;
+        while(temp != null && temp.value != x){
+            temp = temp.down;
+        }
+        if(temp == null){
+            console.log("No existe el nodo con coordenada x: " + x);
+            return false;
+        }
+        let curr = temp.right;
+        while(curr != null && curr.y != y){
+            curr = curr.right;
+        }
+        if(curr == null){
+            console.log("No existe el nodo con coordenada y: " + y);
+            return false;
+        }
+        curr.value = newValue;
+
+        return true;
+    }
 }

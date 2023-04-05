@@ -9,6 +9,14 @@ class Tnode{
         this.id = null; // PARA GENERAR LA GRÁFICA
         this.matriz = new SparseMatrix();
     }
+
+    reset() {
+        this.folderName = null;
+        this.files = [];
+        this.children = [];
+        this.id = 0;
+        this.matriz = new SparseMatrix();
+    }
 }
 
 
@@ -148,35 +156,28 @@ class Tree{
             // Actualizar el tamaño del árbol
             this.size--;
     
-            // Actualizar los IDs de los nodos si es necesario
-            if (nodeToRemove.id === this.size + 1) {
-              // El nodo eliminado era el último en agregarse
-              this.size--;
-            } else if (nodeToRemove.id < this.size) {
-              // Actualizar los IDs de los nodos posteriores al nodo eliminado
-              this.updateNodeIds(nodeToRemove);
-            }
     
-            // Eliminar el nodo
+            // Eliminar el nodo y limpiar sus parámetros
+            nodeToRemove.reset();
             nodeToRemove = null;
     
-            console.log(`Nodo ${folderName} eliminado`);
+            alert(`Nodo ${folderName} eliminado`);
           } else {
-            console.log(`El nodo ${folderName} no existe en la ruta ${fatherPath}`);
+            alert(`El nodo ${folderName} no existe en la ruta ${fatherPath}`);
           }
         } else {
           console.log(`La ruta ${fatherPath} no existe`);
         }
-      }
+    }
     
-      // Método auxiliar para actualizar los IDs de los nodos después de la eliminación de un nodo
-      updateNodeIds(node) {
+
+    updateNodeIds(node) {
         node.id--;
-    
+
         for (let child of node.children) {
-          this.updateNodeIds(child);
+            this.updateNodeIds(child);
         }
-      }
+    }
 }
 
 

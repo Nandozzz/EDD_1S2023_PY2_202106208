@@ -89,8 +89,8 @@ function cargar() {
     let opciones2 = [];
     let temp = localStorage.getItem("avlTree")
     estudiantes = JSON.parse(temp).estudiantes;
+    
     let path = $('#path').val();
-
     carpetaP = tree.getFolder(path);
     console.log(carpetaP.files);
 
@@ -151,6 +151,8 @@ function agregar_sparase(){
     const permisoValue = permisoSelect.value;
     console.log(permisoValue);
 
+    
+
 
     let path = $('#path').val();
     tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
@@ -158,4 +160,48 @@ function agregar_sparase(){
 
 }
 
+
+
+
+function eliminar(){
+    let opciones3 = [];
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.children);
+
+    const selectElement2 = document.getElementById("hijos");
+    selectElement2.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement2.innerHTML = "<option selected disabled>Seleccionar Carpeta</option>";
+    opciones3 = carpetaP.children;
+    for (let i = 0; i < opciones3.length; i++) {
+        const opcion = opciones3[i].folderName;
+        const elementoOpcion = document.createElement("option");
+        elementoOpcion.value = opcion;
+        elementoOpcion.textContent = opcion;
+        selectElement2.appendChild(elementoOpcion);
+    }
+
+
+}
+
+
+function eliminarCarpeta(){
+    let path = $('#path').val();
+    let carpetaSelect = document.getElementById("hijos");
+    let carpetaValue = carpetaSelect.value;
+    console.log(carpetaValue);
+
+    if(carpetaValue == "Seleccionar Carpeta"){
+        alert("Ingrese Carpeta");
+    }
+
+    tree.remove(carpetaValue, path);
+
+}
+
+
+function actualizarVentana(){
+    let path =  $('#path').val();
+    $('#carpetas').html(tree.getHTML(path))
+}
 
