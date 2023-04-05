@@ -10,6 +10,8 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body class="bg-dark">
+
+    
     <style>
         .folder:hover{
             background-color: cornsilk;
@@ -17,7 +19,14 @@
             transform: .3s;
             cursor: pointer;
         }
+
+        .modal-content  {
+            color: black;
+        }
     </style>
+
+
+
     <div class="container text-light py-5">
         <h1 class="text-center">Sistema de Archivos</h1>
         <hr>
@@ -36,10 +45,58 @@
                 <form class="form" onsubmit="subirArchivo(event)">
                     <input type="text" id="fileName" name="fileName" class="form-control mb-4" placeholder="Nombre de Archivos"/>
                     <input type="file" id="file" name="file" class="form-control" accept="application/pdf, .txt, image/*">
+                    
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary w-100">Subir Archivo</button>
+                        
                     </div>
                 </form>
+
+                <h5 class="pt-4">Permisos</h5>
+                <hr>
+
+                <!-- Button trigger modal -->
+                <button onclick ="cargar()" type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenter">Dar Permisos </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Dar Permisos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h5>Archivos</h5>
+                            <hr>
+                            <select id="archivos" name="traversal" class="form-select"> </select>
+                            <br><br>
+                            
+                            <h5>Usuarios</h5>
+                            <hr>
+                            <select id="usuarios" name="traversal" class="form-select"></select>
+                            <br><br>
+
+                            <h5>Permisos</h5>
+                            <hr>
+                            <select id="permisos" name="traversal" class="form-select"></select>
+                            <br><br>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button onclick ="agregar_sparase()" type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                
                 <h5 class="pt-4">Reportes</h5>
                 <hr>
                 <a onclick="showTreeGraph()" class="btn btn-primary w-100 mt-3">Gráfica de Árbol</a>
@@ -61,11 +118,11 @@
                 </div>
                 <img id="imagenSubida"/>
                 <div class="row mt-4" id="carpetas">
-
-                    <div class="col-2 folder" onclick="">
+                    <!-- MOSTRAR LAS CARPETAS -->
+                    <!-- <div class="col-2 folder" onclick="">
                         <img src="./imgs/folder.png" width="100%"/>
                         <p class="h6"> Nombre de Carpeta</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

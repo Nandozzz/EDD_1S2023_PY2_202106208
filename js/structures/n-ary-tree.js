@@ -7,6 +7,7 @@ class Tnode{
         this.files = [];
         this.children = []; // TODOS LOS NODOS HIJOS
         this.id = null; // PARA GENERAR LA GRÁFICA
+        this.matriz = new SparseMatrix();
     }
 }
 
@@ -20,10 +21,13 @@ class Tree{
 
     insert(folderName, fatherPath){ 
         let newNode =  new Tnode(folderName);
+        
+
         let fatherNode = this.getFolder(fatherPath);
         if(fatherNode){
             this.size += 1;
             newNode.id = this.size;
+
             fatherNode.children.push(newNode);
         }else{
             console.log("Ruta no existe");
@@ -113,16 +117,66 @@ class Tree{
     }
 
 
-     insertFile(path, fileName, content, type){
-        let temp = this.getFolder(path);
-        temp.matriz.insertHeaderOnly(fileName, content, type);
-     }    
+    insertFile(path, archivoNombre, carnet, permisos){
+    let temp = this.getFolder(path);
+    temp.matriz.insert(archivoNombre, carnet, permisos);
+    }    
 
-    // matrixGrpah(path){
-    //     let temp = this.getFolder(path);
-    //     console.log(temp.matriz);
-    //     return temp.matriz.graph();
-    // }
+
+    matrixGrpah(path){
+         let temp = this.getFolder(path);
+         console.log(temp.matriz);
+         return temp.matriz.graph();
+    }
+
+
+    remove(folderName, fatherPath) {
+        let fatherNode = this.getFolder(fatherPath);
+    
+        if (fatherNode) {
+          // Encontrar el índice del nodo a eliminar en la lista de hijos del padre
+          let childIndex = fatherNode.children.findIndex(
+            child => child.folderName === folderName
+          );
+    
+          if (childIndex !== -1) {
+            let nodeToRemove = fatherNode.children[childIndex];
+    
+            // Eliminar las referencias al nodo a eliminar
+            fatherNode.children.splice(childIndex, 1);
+    
+            // Actualizar el tamaño del árbol
+            this.size--;
+    
+            // Actualizar los IDs de los nodos si es necesario
+            if (nodeToRemove.id === this.size + 1) {
+              // El nodo eliminado era el último en agregarse
+              this.size--;
+            } else if (nodeToRemove.id < this.size) {
+              // Actualizar los IDs de los nodos posteriores al nodo eliminado
+              this.updateNodeIds(nodeToRemove);
+            }
+    
+            // Eliminar el nodo
+            nodeToRemove = null;
+    
+            console.log(`Nodo ${folderName} eliminado`);
+          } else {
+            console.log(`El nodo ${folderName} no existe en la ruta ${fatherPath}`);
+          }
+        } else {
+          console.log(`La ruta ${fatherPath} no existe`);
+        }
+      }
+    
+      // Método auxiliar para actualizar los IDs de los nodos después de la eliminación de un nodo
+      updateNodeIds(node) {
+        node.id--;
+    
+        for (let child of node.children) {
+          this.updateNodeIds(child);
+        }
+      }
 }
 
 

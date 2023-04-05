@@ -7,6 +7,7 @@ class AvlNode{
         this.left = null;
         this.right = null;
         this.height = 0;
+
     }
 }
 
@@ -22,10 +23,12 @@ let = connections = "";
 class AvlTree{
     constructor(){
         this.root = null;
+        this.estudiantes = [];
     }
 
     insert(item){
         this.root = this.#insertRecursive(item, this.root);
+            
     }
 
     getHeight(node){
@@ -56,8 +59,10 @@ class AvlTree{
     #insertRecursive(item, node){
         if(node == null){
             node = new AvlNode(item);
+            
         }else if(item.carnet < node.item.carnet){
             node.left = this.#insertRecursive(item, node.left);
+            
             if(this.getHeight(node.left) - this.getHeight(node.right) == 2){
                 if(item.carnet < node.left.item.carnet){
                     node = this.#rotateLeft(node);
@@ -67,6 +72,7 @@ class AvlTree{
             }
         }else if(item.carnet > node.item.carnet){
             node.right = this.#insertRecursive(item, node.right);
+            
             if(this.getHeight(node.right) - this.getHeight(node.left) == 2){
                 if(item.carnet < node.right.item.carnet){
                     node = this.#rotateRight(node);
@@ -203,6 +209,21 @@ class AvlTree{
             </tr>
         `;
         return row;
+    }
+
+    fillEstudiantesArray() {
+        this.estudiantes = [];
+        this.#fillEstudiantesArrayRecursive(this.root);
+    }
+    
+    #fillEstudiantesArrayRecursive(node) {
+        if (node === null) {
+          return;
+        }
+        
+        this.#fillEstudiantesArrayRecursive(node.left);
+        this.estudiantes.push(node.item.carnet);
+        this.#fillEstudiantesArrayRecursive(node.right);
     }
 
 

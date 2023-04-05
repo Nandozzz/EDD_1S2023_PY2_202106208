@@ -30,8 +30,10 @@ function loadStudentsForm(e) {
             )
             for(let i = 0; i < studentsArray.length; i++){
                 avlTree.insert(studentsArray[i]);
+                avlTree.estudiantes.push(studentsArray[i].carnet);
             }
             // GUARDAR EN LOCAL STORAGE
+
             localStorage.setItem("avlTree", JSON.stringify(avlTree))
             alert('Alumnos cargados con éxito!')
         }
@@ -39,6 +41,8 @@ function loadStudentsForm(e) {
         console.log(error);
         alert("Error en la inserción");
     }
+ 
+    
 
 }
 
@@ -110,6 +114,7 @@ function validar() {
     }
       
 }
+
 
 
 

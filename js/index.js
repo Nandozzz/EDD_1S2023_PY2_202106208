@@ -3,6 +3,7 @@
 
 let tree =  new Tree();
 
+
 function crearCarpeta(e){
     e.preventDefault();
     let folderName =  $('#folderName').val();
@@ -35,7 +36,7 @@ function showMatrixGraph(){
     let path = $('#path').val();
     let url = 'https://quickchart.io/graphviz?graph=';
     console.log(tree.matrixGrpah(path))
-    // let body = `digraph G { ${tree.matrixGrpah(path)} }`
+    let body = `digraph G { ${tree.matrixGrpah(path)} }`
     $("#graph").attr("src", url + body);
 }
 
@@ -82,3 +83,79 @@ const subirArchivo =  async (e) => {
     alert('Archivo Subido!')
 
 }
+
+function cargar() {
+    let opciones = [];
+    let opciones2 = [];
+    let temp = localStorage.getItem("avlTree")
+    estudiantes = JSON.parse(temp).estudiantes;
+    let path = $('#path').val();
+
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.files);
+
+    const selectElement = document.getElementById("usuarios");
+    selectElement.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement.innerHTML = "<option selected disabled>Seleccionar Usuario</option>";
+    opciones = estudiantes;
+    for (let i = 0; i < opciones.length; i++) {
+        const opcion = opciones[i];
+        const elementoOpcion = document.createElement("option");
+        elementoOpcion.value = opcion;
+        elementoOpcion.textContent = opcion;
+        selectElement.appendChild(elementoOpcion);
+    }
+
+    const selectElement2 = document.getElementById("archivos");
+    selectElement2.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement2.innerHTML = "<option selected disabled>Seleccionar Archivo</option>";
+    opciones2 = carpetaP.files;
+    for (let i = 0; i < opciones2.length; i++) {
+        const opcion = opciones2[i].name;
+        const elementoOpcion = document.createElement("option");
+        elementoOpcion.value = opcion;
+        elementoOpcion.textContent = opcion;
+        selectElement2.appendChild(elementoOpcion);
+    }
+
+
+    const selectElement3 = document.getElementById("permisos");
+    selectElement3.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement3.innerHTML = "<option selected disabled>Seleccionar Archivo</option>";
+
+    const permisos = ["r", "w", "r-w"];
+    permisos.forEach(opcion => {
+      const elementoOpcion = document.createElement("option");
+      elementoOpcion.value = opcion;
+      elementoOpcion.textContent = opcion;
+      selectElement3.appendChild(elementoOpcion);
+    });
+
+
+
+}
+
+
+function agregar_sparase(){
+    const archivoSelect = document.getElementById("archivos");
+    const archivoValue = archivoSelect.value;
+    console.log(archivoValue );
+
+
+    const usuarioSelect = document.getElementById("usuarios");
+    const usuarioValue = usuarioSelect.value;
+    console.log(usuarioValue);
+
+
+    const permisoSelect = document.getElementById("permisos");
+    const permisoValue = permisoSelect.value;
+    console.log(permisoValue);
+
+
+    let path = $('#path').val();
+    tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
+
+
+}
+
+
