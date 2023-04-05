@@ -151,9 +151,6 @@ function agregar_sparase(){
     const permisoValue = permisoSelect.value;
     console.log(permisoValue);
 
-    
-
-
     let path = $('#path').val();
     tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
 

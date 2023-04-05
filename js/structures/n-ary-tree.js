@@ -127,7 +127,11 @@ class Tree{
 
     insertFile(path, archivoNombre, carnet, permisos){
     let temp = this.getFolder(path);
-    temp.matriz.insert(archivoNombre, carnet, permisos);
+
+    if(temp.matriz.actualizar(archivoNombre, carnet, permisos)==false){
+        temp.matriz.insert(archivoNombre, carnet, permisos);
+    }
+    
     }    
 
 
