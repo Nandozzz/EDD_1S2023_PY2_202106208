@@ -25,6 +25,7 @@ class Tree{
         this.root = new Tnode('/');
         this.root.id = 0;
         this.size = 1; // Para generar los ids
+        this.listaC = new CircularList ();
     }
 
     insert(folderName, fatherPath){ 

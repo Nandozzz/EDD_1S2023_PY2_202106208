@@ -10,6 +10,11 @@ function crearCarpeta(e){
     let path =  $('#path').val();
     tree.insert(folderName, path);
     alert("Todo bien!")
+
+    const now = new Date();
+    const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    tree.listaC.insertList(formattedDate, "Acción: Se creo carpeta \""+folderName +"\"")
+
     $('#carpetas').html(tree.getHTML(path))
 }
 
@@ -52,6 +57,8 @@ const subirArchivo =  async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
+
+    let nombreA = ""
     // console.log(form.file.type);
     let path = $('#path').val();
     if(form.file.type === 'text/plain'){
@@ -60,9 +67,9 @@ const subirArchivo =  async (e) => {
         fr.readAsText(form.file);
         fr.onload = () => { 
             // CARGAR ARCHIVO A LA MATRIZ
+            nombreA = nuevoNombreArchivo()
             tree.getFolder(path).files.push({
-                
-                name: nuevoNombreArchivo(), 
+                name: nombreA, 
                 content: fr.result, 
                 type: form.file.type
             })
@@ -71,8 +78,9 @@ const subirArchivo =  async (e) => {
     }else{
         // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
+        nombreA = nuevoNombreArchivo()
         tree.getFolder(path).files.push({
-            name: nuevoNombreArchivo(), 
+            name: nombreA, 
             content: parseBase64, 
             type: form.file.type
         })
@@ -81,6 +89,10 @@ const subirArchivo =  async (e) => {
         // $("#imagenSubida").attr("src", imgBase64); 
         // console.log(await toBase64(form.file));
     }
+
+    const now = new Date();
+    const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    tree.listaC.insertList(formattedDate, "Acción: Se creo archivo \""+ nombreA +"\"")
     alert('Archivo Subido!')
 
 }
@@ -191,16 +203,23 @@ function eliminarCarpeta(){
 
     if(carpetaValue == "Seleccionar Carpeta"){
         alert("Ingrese Carpeta");
+        return
     }
 
     tree.remove(carpetaValue, path);
+
+    const now = new Date();
+    const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    tree.listaC.insertList(formattedDate, "Acción: Se elimino carpeta \""+ carpetaValue +"\"")
+    alert('Carpeta eliminada!')
+    
+    $('#carpetas').html(tree.getHTML(path))
 
 }
 
 
 function actualizarVentana(){
-    let path =  $('#path').val();
-    $('#carpetas').html(tree.getHTML(path))
+    tree.listaC.print()
 }
 
 function buscarCarpetas(nombre){
