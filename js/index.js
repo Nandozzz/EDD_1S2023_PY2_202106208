@@ -6,7 +6,7 @@ let tree =  new Tree();
 
 function crearCarpeta(e){
     e.preventDefault();
-    let folderName =  $('#folderName').val();
+    let folderName = nuevoNombre()
     let path =  $('#path').val();
     tree.insert(folderName, path);
     alert("Todo bien!")
@@ -61,7 +61,8 @@ const subirArchivo =  async (e) => {
         fr.onload = () => { 
             // CARGAR ARCHIVO A LA MATRIZ
             tree.getFolder(path).files.push({
-                name: form.fileName, 
+                
+                name: nuevoNombreArchivo(), 
                 content: fr.result, 
                 type: form.file.type
             })
@@ -71,7 +72,7 @@ const subirArchivo =  async (e) => {
         // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
         tree.getFolder(path).files.push({
-            name: form.fileName, 
+            name: nuevoNombreArchivo(), 
             content: parseBase64, 
             type: form.file.type
         })
@@ -202,3 +203,89 @@ function actualizarVentana(){
     $('#carpetas').html(tree.getHTML(path))
 }
 
+function buscarCarpetas(nombre){
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+
+    let listaTemp = carpetaP.children
+
+    for (let i = 0; i < listaTemp.length; i++) {
+        if(listaTemp[i].folderName== nombre){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+function nuevoNombre(){
+
+    let folderName =  $('#folderName').val();
+    let estado = false;
+    let N=0;
+
+    estado = buscarCarpetas(folderName);
+
+    if(estado == true){
+        do {
+            N=N+1;
+            nuevoName= "Copia("+ N +") "+ folderName;
+
+            estado=buscarCarpetas(nuevoName);
+
+          
+        } while (estado == true);
+
+        return nuevoName;
+    }
+
+    return folderName;
+
+}
+
+
+
+function buscarArchivos(nombre){
+
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+
+
+    let listaTemp = carpetaP.files
+
+
+    for (let i = 0; i < listaTemp.length; i++) {
+        if(listaTemp[i].name== nombre){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function nuevoNombreArchivo(){
+    let fileName =  $('#fileName').val();
+    let estado = false;
+    let N=0;
+
+
+    estado = buscarArchivos(fileName);
+
+    if(estado == true){
+        do {
+            N=N+1;
+            nuevoName= fileName + " ("+ N +")";
+
+            estado=buscarArchivos(nuevoName);
+
+          
+        } while (estado == true);
+
+        return nuevoName;
+    }
+
+    return fileName;
+
+
+}
