@@ -13,7 +13,7 @@ function crearCarpeta(e){
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-    tree.listaC.insertList(formattedDate, "Acción: Se creo carpeta \""+folderName +"\"")
+    tree.listaC.insertList(formattedDate, "Se creo carpeta -- "+folderName)
 
     $('#carpetas').html(tree.getHTML(path))
 }
@@ -42,6 +42,13 @@ function showMatrixGraph(){
     let url = 'https://quickchart.io/graphviz?graph=';
     console.log(tree.matrixGrpah(path))
     let body = `digraph G { ${tree.matrixGrpah(path)} }`
+    $("#graph").attr("src", url + body);
+}
+
+function showListGraph(){
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `${tree.listaC.graph()}`
+    console.log(body);
     $("#graph").attr("src", url + body);
 }
 
@@ -92,7 +99,7 @@ const subirArchivo =  async (e) => {
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-    tree.listaC.insertList(formattedDate, "Acción: Se creo archivo \""+ nombreA +"\"")
+    tree.listaC.insertList(formattedDate, "Se creo archivo -- "+ nombreA)
     alert('Archivo Subido!')
 
 }
@@ -210,9 +217,8 @@ function eliminarCarpeta(){
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-    tree.listaC.insertList(formattedDate, "Acción: Se elimino carpeta \""+ carpetaValue +"\"")
-    alert('Carpeta eliminada!')
-    
+    tree.listaC.insertList(formattedDate, "Se elimino carpeta -- "+ carpetaValue)
+
     $('#carpetas').html(tree.getHTML(path))
 
 }

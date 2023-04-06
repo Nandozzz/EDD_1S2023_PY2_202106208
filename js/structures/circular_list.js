@@ -61,15 +61,22 @@ graph() {
     let conn = "";
     let nodes = "";
     let counter = 0;
+    let rango = "";
     while (temp.next != this.head) {
-    nodes += `N${counter}[label="Valor: ${temp.value}"];\n`;
+    nodes += `N${counter}[label="Accion: ${temp.value.accion}"];\n`;
     conn += `N${counter}->`;
+    rango += `N${counter} `
     temp = temp.next;
     counter++;
     }
-    nodes += `N${counter}[label="Valor: ${temp.value}"];\n`;
+    nodes += `N${counter}[label="Accion: ${temp.value.accion}"];\n`;
     conn += `N${counter}-> N0`;
+    rango += `N${counter} `
     console.log(nodes);
     console.log(conn);
+
+    return  "digraph G {\n" + "node[shape=rectangle, style=filled, color=black, fillcolor=white, width=4];\n" + "rankdir=TB;\n" + "nodesep=1;\n" + nodes + conn + "{rank=same;" + rango + ";}\n" + "\n}"
+    
+
 }
 }
