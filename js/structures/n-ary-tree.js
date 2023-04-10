@@ -8,29 +8,22 @@ class Tnode{
         this.children = []; // TODOS LOS NODOS HIJOS
         this.id = null; // PARA GENERAR LA GRÁFICA
         this.matriz = new SparseMatrix();
+        this.matriz2 = new SparseMatrix()
     }
 
-    reset() {
-        this.folderName = null;
-        this.files = [];
-        this.children = [];
-        this.id = 0;
-        this.matriz = new SparseMatrix();
-    }
 }
 
 
 class Tree{
-    constructor(){
+    constructor(size, lista){
         this.root = new Tnode('/');
         this.root.id = 0;
-        this.size = 1; // Para generar los ids
-        this.listaC = new CircularList ();
+        this.size = size // Para generar los ids
+        this.listaC = lista;
     }
 
     insert(folderName, fatherPath){ 
         let newNode =  new Tnode(folderName);
-        
 
         let fatherNode = this.getFolder(fatherPath);
         if(fatherNode){
@@ -99,7 +92,7 @@ class Tree{
         // console.log(node.files)
         node.files.map(file => {
             if(file.type === 'text/plain'){
-                let archivo = new Blob([file.content], file.type);
+                let archivo = new Blob([file.content], {type: file.type} );
                 const url = URL.createObjectURL(archivo);
                 code += `
                         <div class="col-2 folder">
@@ -128,19 +121,70 @@ class Tree{
 
     insertFile(path, archivoNombre, carnet, permisos){
     let temp = this.getFolder(path);
+    let matriz2 = new SparseMatrix()
+    
+    matriz2.head = temp.matriz.head
 
-    if(temp.matriz.actualizar(archivoNombre, carnet, permisos)==false){
-        temp.matriz.insert(archivoNombre, carnet, permisos);
+    if(matriz2.actualizar(archivoNombre, carnet, permisos)==false){
+        matriz2.insert(archivoNombre, carnet, permisos);
     }
     
+    temp.matriz = matriz2;
     }    
+    
+    insertX(path, archivoNombre){
+        let temp = this.getFolder(path);
+        let matriz2 = new SparseMatrix()
+        
+        matriz2.head = temp.matriz2.head
+        console.log(archivoNombre)
+    
+        matriz2.insertX(archivoNombre);
+
+        temp.matriz2 = matriz2;
+    }    
+        
 
 
     matrixGrpah(path){
          let temp = this.getFolder(path);
-         console.log(temp.matriz);
-         return temp.matriz.graph();
+         let matriz2 = new SparseMatrix()
+
+         matriz2.head = temp.matriz.head
+ 
+         return matriz2.graph();
     }
+
+    matrixGrpah2(path){
+        let temp = this.getFolder(path);
+        let matriz3 = new SparseMatrix()
+
+        matriz3.head = temp.matriz2.head
+
+        return matriz3.graph2();
+   }
+
+   insertarLista(fecha, accion){
+        let temp = this.listaC
+        let lista = new CircularList()
+
+        lista.head= temp.head
+        lista.tail = temp.tail
+
+        lista.insertList(fecha, accion);
+
+        this.listaC = lista
+   }
+
+
+   listGrpah(){
+    let temp = this.getFolder(path);
+    let matriz3 = new CircularList()
+
+    matriz3.head = temp.matriz2.head
+
+    return matriz3.graph2();
+}
 
 
     remove(folderName, fatherPath) {
@@ -163,8 +207,14 @@ class Tree{
     
     
             // Eliminar el nodo y limpiar sus parámetros
-            nodeToRemove.reset();
-            nodeToRemove = null;
+            this.folderName = null;
+            this.files = [];
+            this.children = [];
+            this.id = 0;
+            this.matriz = new SparseMatrix();
+            this.matriz2 = new SparseMatrix()
+
+            nodeToRemove = null
     
             alert(`Nodo ${folderName} eliminado`);
           } else {
@@ -175,6 +225,9 @@ class Tree{
         }
     }
     
+
+
+
 
     updateNodeIds(node) {
         node.id--;

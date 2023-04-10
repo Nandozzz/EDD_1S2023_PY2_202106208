@@ -1,0 +1,124 @@
+{
+	"alumnos": [
+		{
+			"nombre": "Hugo Rosal", 
+			"carnet": 8318054, 
+			"password": "Hugo30", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Williams Constanza", 
+			"carnet": 199919737, 
+			"password": "Williams42", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Jim Melendez", 
+			"carnet": 200715321, 
+			"password": "Jim67", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Ebany Larios", 
+			"carnet": 201403877, 
+			"password": "qwerty12", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Dennis Escobar", 
+			"carnet": 201700792, 
+			"password": "Dennis28", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Cristian Suy", 
+			"carnet": 201700918, 
+			"password": "Cris123", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Leonardo Martinez", 
+			"carnet": 201780044, 
+			"password": "leo123", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Erick Chacon", 
+			"carnet": 201807169, 
+			"password": "Erick91", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Brian Garcia" , 
+			"carnet": 201807351, 
+			"password": "Brian12", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Gladys Ajuchan", 
+			"carnet": 201807389, 
+			"password": "Gladys17", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Christopher Monterroso", 
+			"carnet": 201902363, 
+			"password": "Christopher66", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Diana Berducido", 
+			"carnet": 202000277, 
+			"password": "Diana55", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Javier Matias", 
+			"carnet": 202000896, 
+			"password": "Javier47", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Kevin Hernandez", 
+			"carnet": 202001053, 
+			"password": "Kevin4", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Nataly Guzman", 
+			"carnet": 202001570, 
+			"password": "Nataly84", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Fredy Quijada", 
+			"carnet": 202004812, 
+			"password": "Fredy63", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Maria Tebalan", 
+			"carnet": 202100265, 
+			"password": "Maria41", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Damaris Muralles", 
+			"carnet": 202100953, 
+			"password": "Damaris89", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Steven Mejia", 
+			"carnet": 202104160, 
+			"password": "Steven18", 
+			"Carpeta_Raiz": "/" 
+		},
+		{
+			"nombre": "Pablo Barahona" , 
+			"carnet": 202109715, 
+			"password": "Pablo42", 
+			"Carpeta_Raiz": "/" 
+		}
+	]
+}

@@ -1,5 +1,11 @@
 
 let avlTree = new AvlTree();
+let lista = new CircularList()
+let tree =  new Tree(1, lista);
+
+
+
+
 
 function validar() {
   var carnet = document.getElementById("carnet").value;
@@ -16,7 +22,18 @@ function validar() {
 
       if(avlTree.search(parseInt(carnet), contrasena)!= null){
         alert("Inicio de sesión exitoso");
+        usuario=avlTree.search(parseInt(carnet), contrasena)
+
+        if (localStorage.getItem(carnet) !== null) {
+          // El archivo existe en el almacenamiento local
+        } else {
+          // El archivo no existe en el almacenamiento local
+          localStorage.setItem(carnet, JSON.stringify(JSON.decycle(tree)));
+        }
+        localStorage.setItem("usuario_actual", carnet)
+        localStorage.setItem("nombre_actual", usuario.nombre)
         window.location.href = "usuario.html";
+
       } else{
         alert("No se encontro usuario");
       }

@@ -1,7 +1,24 @@
 // let NaryTree = require('./structures/n-ary-tree');
 
+let usuario_actual = localStorage.getItem("usuario_actual")
+let nombre_actual = localStorage.getItem("nombre_actual")
+let Tree2 = JSON.retrocycle(JSON.parse(localStorage.getItem(usuario_actual)));
 
-let tree =  new Tree();
+let tree =  new Tree(Tree2.size, Tree2.listaC);
+tree.root = Tree2.root;
+
+
+iniciar_sesion()
+
+
+
+let valorSpan = document.getElementById("valor_id");
+valorSpan.innerHTML = `Bienvenido ${nombre_actual}`;
+
+
+
+
+
 
 
 function crearCarpeta(e){
@@ -13,9 +30,11 @@ function crearCarpeta(e){
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-    tree.listaC.insertList(formattedDate, "Se creo carpeta -- "+folderName)
+    tree.insertarLista(formattedDate, "Se creo carpeta -- "+folderName)
 
     $('#carpetas').html(tree.getHTML(path))
+
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
 
 function entrarCarpeta(folderName){
@@ -24,6 +43,7 @@ function entrarCarpeta(folderName){
     console.log(curretPath)
     $('#path').val(curretPath);
     $('#carpetas').html(tree.getHTML(curretPath))
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
 
 function retornarInicio(){
@@ -35,6 +55,7 @@ function showTreeGraph(){
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${tree.graph()} }`
     $("#graph").attr("src", url + body);
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
 
 function showMatrixGraph(){
@@ -43,6 +64,17 @@ function showMatrixGraph(){
     console.log(tree.matrixGrpah(path))
     let body = `digraph G { ${tree.matrixGrpah(path)} }`
     $("#graph").attr("src", url + body);
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
+}
+
+
+function showMatrixGraph2(){
+    let path = $('#path').val();
+    let url = 'https://quickchart.io/graphviz?graph=';
+    console.log(tree.matrixGrpah(path))
+    let body = `digraph G { ${tree.matrixGrpah2(path)} }`
+    $("#graph").attr("src", url + body);
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
 
 function showListGraph(){
@@ -70,11 +102,12 @@ const subirArchivo =  async (e) => {
     let path = $('#path').val();
     if(form.file.type === 'text/plain'){
         // ARCHIVO DE TEXTO
+        nombreA = nuevoNombreArchivo()
         let fr = new FileReader();
         fr.readAsText(form.file);
         fr.onload = () => { 
             // CARGAR ARCHIVO A LA MATRIZ
-            nombreA = nuevoNombreArchivo()
+            
             tree.getFolder(path).files.push({
                 name: nombreA, 
                 content: fr.result, 
@@ -82,6 +115,8 @@ const subirArchivo =  async (e) => {
             })
             $('#carpetas').html(tree.getHTML(path));
         };
+
+        tree.insertX(path, nombreA)
     }else{
         // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
@@ -92,6 +127,9 @@ const subirArchivo =  async (e) => {
             type: form.file.type
         })
         $('#carpetas').html(tree.getHTML(path));
+        
+        tree.insertX(path, nombreA)
+
         // console.log(parseBase64)
         // $("#imagenSubida").attr("src", imgBase64); 
         // console.log(await toBase64(form.file));
@@ -100,7 +138,10 @@ const subirArchivo =  async (e) => {
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
     tree.listaC.insertList(formattedDate, "Se creo archivo -- "+ nombreA)
+    
+
     alert('Archivo Subido!')
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 
 }
 
@@ -300,7 +341,7 @@ function nuevoNombreArchivo(){
     if(estado == true){
         do {
             N=N+1;
-            nuevoName= fileName + " ("+ N +")";
+            nuevoName= fileName + "〈"+ N +"〉";
 
             estado=buscarArchivos(nuevoName);
 
@@ -313,4 +354,30 @@ function nuevoNombreArchivo(){
     return fileName;
 
 
+}
+
+function iniciar_sesion(){
+    let now = new Date();
+    let formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    tree.insertarLista(formattedDate, "Se inició sección");
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
+
+    let path =  $('#path').val();
+    $('#carpetas').html(tree.getHTML(path))
+
+    alert("Bienvenido " + nombre_actual);
+
+}
+
+
+
+function cerrar_sesion(){
+    let now = new Date();
+    let formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    tree.insertarLista(formattedDate, "Se cerró sección");
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
+
+    window.location.href = "login.html";
+
+    alert("Hasta la próxima :(");
 }

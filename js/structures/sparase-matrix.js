@@ -23,10 +23,7 @@ class SparseMatrix{
         this.head =  new Mnode(-1, -1, "Inicio");
     }
     
-    insertHeaderOnly(y, content, type){
-        // CREAR CABECERAS DE LAS COLUMNAS O EJE Y
-        this.#yHeaders(y, content, type);
-    }
+
 
     insert(x, y, value){
         // CREAR CABECERAS DE LAS FILAS O EJE X
@@ -39,6 +36,10 @@ class SparseMatrix{
         this.#addX(node, x);
         // AGREGAR AL EJE Y
         this.#addY(node, y);
+    }
+
+    insertX(x){
+        this.#xHeaders(x);
     }
 
     // REALIZAR LAS CABECERAS EN LAS FILAS O EJE X
@@ -217,6 +218,19 @@ class SparseMatrix{
         // console.log(code)
         return(code)
     }
+
+    graph2(){
+        let code = "graph [nodesep=\"0.8\", ranksep=\"0.6\"]; \n";
+		code +="M0[ label = \"Inicio\" width = 1.5 shape = \"square\" style = \"filled\" fillcolor =\"slateblue\" group=\"0\"]; \n";
+        code += this.#headersGraph()
+        //code += this.#nodesGraph()
+        console.log(code)
+        return(code)
+    }
+
+
+
+
     #headersGraph(){
         let conn = "M0 ->";
         let nodes = "";
@@ -292,6 +306,44 @@ class SparseMatrix{
         return nodes + "\n" + rank + "\n" + conn;
     }
 
+    generateHeaderGraph() {
+        let code = "graph [nodesep=\"0.8\", ranksep=\"0.6\"]; \n";
+        code += "M0[ label = \"Inicio\" width = 1.5 shape = \"square\" style = \"filled\" fillcolor =\"slateblue\" group=\"0\"]; \n";
+      
+        // Generar nodos y conexiones para las cabeceras X
+        let temp = this.head.down;
+        while (temp != null) {
+          code += `X${temp.value}[label="${temp.value}" width = 1.5 shape ="square" style="filled" fillcolor="skyblue3" group="0"];\n`;
+      
+          if (temp.down != null) {
+            code += `M0 -> X${temp.value} -> {rank = same; `;
+            let ty = temp.down;
+            while (ty != null) {
+              code += `Y${ty.value};`;
+              ty = ty.right;
+            }
+            code += "}\n";
+          } else {
+            code += `M0 -> X${temp.value} [dir="both"];\n`;
+          }
+          temp = temp.down;
+        }
+      
+        // Generar nodos y conexiones para las cabeceras Y
+        temp = this.head.right;
+        while (temp != null) {
+          code += `Y${temp.value}[label="${temp.value}" width = 1.5 shape ="square" style="filled" fillcolor="skyblue3" group="${temp.value}" ];\n`;
+          if (temp.right != null) {
+            code += `M0 -> Y${temp.value} -> `;
+          } else {
+            code += `M0 -> Y${temp.value} [dir="both"];\n`;
+          }
+          temp = temp.right;
+        }
+      
+        return code;
+    }
+
 
     actualizar(x, y, newValue){
         let temp = this.head.down;
@@ -302,6 +354,7 @@ class SparseMatrix{
             console.log("No existe el nodo con coordenada x: " + x);
             return false;
         }
+
         let curr = temp.right;
         while(curr != null && curr.y != y){
             curr = curr.right;

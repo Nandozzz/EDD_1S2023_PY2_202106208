@@ -23,6 +23,11 @@
         .modal-content  {
             color: black;
         }
+
+        .ROW{
+            overflow: scroll; /* Agrega un scroll al contenedor */
+            height: 100;
+        }
     </style>
 
 
@@ -30,6 +35,16 @@
     <div class="container text-light py-5">
         <h1 class="text-center">Sistema de Archivos</h1>
         <hr>
+        <div class="row">
+
+            <div class="col-10">
+                <h5><span id="valor_id"></span></h5>  
+            </div>
+
+            <div class="col-2">
+                <button onclick ="cerrar_sesion()" type="button" class="btn btn-primary">Cerrar Sesión</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col-4 p-5">
                 <h5>Nueva Carpeta</h5>
@@ -138,7 +153,8 @@
                 <h5 class="pt-4">Reportes</h5>
                 <hr>
                 <a onclick="showTreeGraph()" class="btn btn-primary w-100 mt-3">Gráfica de Árbol</a>
-                <a onclick="showMatrixGraph()" class="btn btn-primary w-100 mt-3">Gráfica de Matriz</a>
+                <a onclick="showMatrixGraph2()" class="btn btn-primary w-100 mt-3">Gráfica de Matriz de archivos</a>
+                <a onclick="showMatrixGraph()" class="btn btn-primary w-100 mt-3">Gráfica de Matriz de permisos</a>
                 <a onclick="showListGraph()" class="btn btn-primary w-100 mt-3">Gráfica de Lista</a>
             </div>
 
@@ -167,11 +183,12 @@
             </div>
         </div>
 
+        <h3>Reporte</h3>
+        <hr>
         <div class="ROW">
-            <h3>Reporte</h3>
-            <hr>
             <img id="graph">
         </div>
+        
 
         <a download=""></a>
     </div>
@@ -189,6 +206,7 @@
     crossorigin="anonymous"></script>
 
     <!-- Importar Estructuras -->
+    <script src="./js/lib/cycle.js"></script>
     <script src="./js/structures/circular_list.js"></script>
     <script src="./js/structures/sparase-matrix.js"></script>
     <script src="./js/structures/n-ary-tree.js"></script>
