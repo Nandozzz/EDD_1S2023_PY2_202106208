@@ -30,6 +30,7 @@ function loadStudentsForm(e) {
             )
             for(let i = 0; i < studentsArray.length; i++){
                 avlTree.insert(studentsArray[i]);
+                console.log(avlTree.root.height)
                 avlTree.estudiantes.push(studentsArray[i].carnet);
             }
             // GUARDAR EN LOCAL STORAGE

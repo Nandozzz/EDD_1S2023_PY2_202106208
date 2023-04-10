@@ -32,7 +32,7 @@ class AvlTree{
     }
 
     getHeight(node){
-        return node === null ? -1 : node.height;
+        return node?.height ||0
     }
     getMaxHeight(leftNode, rightNode){
         return leftNode.height > rightNode.height ? leftNode.height : rightNode.height;
@@ -59,31 +59,28 @@ class AvlTree{
     #insertRecursive(item, node){
         if(node == null){
             node = new AvlNode(item);
-            
-        }else if(item.carnet < node.item.carnet){
+        } else if(item.carnet < node.item.carnet){
             node.left = this.#insertRecursive(item, node.left);
-            
             if(this.getHeight(node.left) - this.getHeight(node.right) == 2){
                 if(item.carnet < node.left.item.carnet){
                     node = this.#rotateLeft(node);
-                }else{
+                } else {
                     node = this.#doubleLeft(node);
                 }
             }
-        }else if(item.carnet > node.item.carnet){
+        } else if(item.carnet > node.item.carnet){
             node.right = this.#insertRecursive(item, node.right);
-            
             if(this.getHeight(node.right) - this.getHeight(node.left) == 2){
-                if(item.carnet < node.right.item.carnet){
+                if(item.carnet > node.right.item.carnet){
                     node = this.#rotateRight(node);
-                }else{
+                } else {
                     node = this.#doubleRight(node);
                 }
             }
-        }else{
+        } else {
             alert("Elemento ya existe en el árbol");
         }
-        node.height = this.getMaxHeight(this.getHeight(node.left), this.getHeight(node.right)) + 1;
+        node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
         return node;
     }
 
@@ -91,7 +88,7 @@ class AvlTree{
     //                   ROTACIONES
     //--------------------------------------------------------------------------
     #rotateRight(node1){
-        node2 = node1.right;
+        let node2 = node1.right;
         node1.right = node2.left;
         node2.left = node1;
         node1.height = this.getMaxHeight(this.getHeight(node1.left), this.getHeight(node1.right)) + 1;
@@ -99,7 +96,7 @@ class AvlTree{
         return node2;
     }
     #rotateLeft(node2){
-        node1 = node2.left;
+        let node1 = node2.left;
         node2.left = node1.right;
         node1.right = node2;
         node2.height = this.getMaxHeight(this.getHeight(node2.left), this.getHeight(node2.right)) + 1;
@@ -125,17 +122,19 @@ class AvlTree{
         // console.log(nodes,connections);
         return nodes + connections;
     }
-    #treeGraphRecursive(current){
-        if(current.left != null){
-            this.#treeGraphRecursive(current.left);
-            connections += `S_${current.item.carnet} -> S_${current.left.item.carnet};\n`;
+    #treeGraphRecursive(current) {
+        if (current.left != null) {
+          this.#treeGraphRecursive(current.left);
+          connections += `S_${current.item.carnet} -> S_${current.left.item.carnet};\n`;
         }
-        nodes += `S_${current.item.carnet}[label="${current.item.nombre}"];`
-        if(current.right != null){
-            this.#treeGraphRecursive(current.right);
-            connections += `S_${current.item.carnet} -> S_${current.right.item.carnet};\n`;
+      
+        nodes += `S_${current.item.carnet}[label="Carnet:${current.item.carnet} Nombre:${current.item.nombre} Altura:${current ? current.height : 'null'} "];`
+        
+        if (current.right != null) {
+          this.#treeGraphRecursive(current.right);
+          connections += `S_${current.item.carnet} -> S_${current.right.item.carnet};\n`;
         }
-    }
+      }
     
     //--------------------------------------------------------------------------
     //                  RECORRIDO IN ORDER

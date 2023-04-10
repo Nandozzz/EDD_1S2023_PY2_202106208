@@ -13,7 +13,7 @@ iniciar_sesion()
 
 
 let valorSpan = document.getElementById("valor_id");
-valorSpan.innerHTML = `Bienvenido ${nombre_actual}`;
+valorSpan.innerHTML = `${nombre_actual}`;
 
 
 
@@ -114,9 +114,11 @@ const subirArchivo =  async (e) => {
                 type: form.file.type
             })
             $('#carpetas').html(tree.getHTML(path));
+            localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
         };
-
+        
         tree.insertX(path, nombreA)
+        
     }else{
         // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
@@ -192,8 +194,6 @@ function cargar() {
       selectElement3.appendChild(elementoOpcion);
     });
 
-
-
 }
 
 
@@ -261,6 +261,8 @@ function eliminarCarpeta(){
     tree.listaC.insertList(formattedDate, "Se elimino carpeta -- "+ carpetaValue)
 
     $('#carpetas').html(tree.getHTML(path))
+
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 
 }
 
@@ -365,7 +367,7 @@ function iniciar_sesion(){
     let path =  $('#path').val();
     $('#carpetas').html(tree.getHTML(path))
 
-    alert("Bienvenido " + nombre_actual);
+
 
 }
 

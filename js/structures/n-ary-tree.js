@@ -85,7 +85,7 @@ class Tree{
         let code = "";
         node.children.map(child => {
             code += ` <div class="col-2 folder" onclick="entrarCarpeta('${child.folderName}')">
-                        <img src="./imgs/folder.png" width="100%"/>
+                        <img src="./imgs/folder.png" width="85%"/>
                         <p class="h6 text-center">${child.folderName}</p>
                     </div>`
         })
@@ -96,7 +96,7 @@ class Tree{
                 const url = URL.createObjectURL(archivo);
                 code += `
                         <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="100%"/>
+                        <img src="./imgs/file.png" width="85%"/>
                         <p class="h6 text-center">
                             <a href="${url}" download>
                                 ${file.name}
@@ -106,7 +106,7 @@ class Tree{
                 `
             }else{
                 code += ` <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="100%"/>
+                        <img src="./imgs/file.png" width="85%"/>
                         <p class="h6 text-center">
                             <a href="${file.content}" download>
                                 ${file.name}
@@ -189,6 +189,7 @@ class Tree{
 
     remove(folderName, fatherPath) {
         let fatherNode = this.getFolder(fatherPath);
+        let numRest = 0
     
         if (fatherNode) {
           // Encontrar el índice del nodo a eliminar en la lista de hijos del padre
@@ -203,7 +204,8 @@ class Tree{
             fatherNode.children.splice(childIndex, 1);
     
             // Actualizar el tamaño del árbol
-            this.size--;
+            numRest=nodeToRemove.children.length
+            this.size-numRest;
     
     
             // Eliminar el nodo y limpiar sus parámetros

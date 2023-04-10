@@ -1,66 +1,55 @@
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="./estilos/estilos.css">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="estilos/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body class="bg-dark text-light">
-    <br><br>
 
-    
-    <form>
-        <div class="container2">
-            <img src="https://plataformacii.ingenieria.usac.edu.gt/images/logo_fi.png" width="70%" > 
+<body>
+	<img class="wave" src="imgs/wave.png">
+	<div class="container">
+		<div class="img">
+			<img src="imgs/bg.svg">
+		</div>
+		<div class="login-content">
+			<form >
+				<img src="imgs/avatar.svg">
+				<h2 class="title">Bienvenido</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   	
+           		   		<input type="text" placeholder="Ingrese Carnet" name="carnet"  id="carnet"required>
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<input type="password" id="password" name="password" class="form-control" placeholder="Ingrese Carnet">
+            	   </div>
+            	</div>
+            	
+                <button type="button" class="btn btn-primary btn-block" onclick="validar()">Ingresar</button>
+            </form>
         </div>
-        <br>
-        <div class="container">
-            <label for="username"><b>Carnet</b></label>
-            <input type="text" placeholder="Ingrese Carnet" name="carnet"  id="carnet"required>
+    </div>
 
-            <label for="password"><b>Contraseña</b></label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese Contraseña">
 
-            <button type="button" class="btn btn-primary btn-block" onclick="validar()">Ingresar</button>
 
-        <br><br>
-
-        </div>
-
-        <div class="container clearfix">
-            <span class="psw2"><a href="/registro">Crear Usuario</a></span>
-            <span class="psw"><a href="/cambio_pass">Olvide mi contraseña</a></span>
-        </div>
-    </form>
+    <script src="./js/lib/cycle.js"></script>
+    <script src="./js/structures/circular_list.js"></script>
+    <script src="./js/structures/sparase-matrix.js"></script>
+    <script src="./js/structures/n-ary-tree.js"></script>
+    <!-- Importacion de archivos -->
+    <script src="./js/structures/avl-tree.js"></script>
+    <script src="./js/login.js"></script>
 </body>
-
-<footer class="pie_pagina">
-    <br><br>
-    <p>© 2023 - FA</p>
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
-integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
-crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" 
-integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" 
-crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" 
-integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" 
-crossorigin="anonymous"></script>
-
-
-<script src="./js/lib/cycle.js"></script>
-<script src="./js/structures/circular_list.js"></script>
-<script src="./js/structures/sparase-matrix.js"></script>
-<script src="./js/structures/n-ary-tree.js"></script>
-<!-- Importacion de archivos -->
-<script src="./js/structures/avl-tree.js"></script>
-<script src="./js/login.js"></script>
 </html>
-
 
     

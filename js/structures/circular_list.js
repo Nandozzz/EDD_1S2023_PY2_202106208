@@ -63,13 +63,13 @@ graph() {
     let counter = 0;
     let rango = "";
     while (temp.next != this.head) {
-    nodes += `N${counter}[label="Accion: ${temp.value.accion}"];\n`;
+    nodes += `N${counter}[label="Accion: ${temp.value.accion} Fecha: ${temp.value.fecha}"];\n`;
     conn += `N${counter}->`;
     rango += `N${counter} `
     temp = temp.next;
     counter++;
     }
-    nodes += `N${counter}[label="Accion: ${temp.value.accion}"];\n`;
+    nodes += `N${counter}[label="Accion: ${temp.value.accion} Fecha: ${temp.value.fecha}"];\n`;
     conn += `N${counter}-> N0`;
     rango += `N${counter} `
     console.log(nodes);
