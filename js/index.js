@@ -184,7 +184,7 @@ function cargar() {
 
     const selectElement3 = document.getElementById("permisos");
     selectElement3.innerHTML = ""; // Eliminar opciones antiguas
-    selectElement3.innerHTML = "<option selected disabled>Seleccionar Archivo</option>";
+    selectElement3.innerHTML = "<option selected disabled>Seleccionar Permiso</option>";
 
     const permisos = ["r", "w", "r-w"];
     permisos.forEach(opcion => {
@@ -212,13 +212,22 @@ function agregar_sparase(){
     const permisoValue = permisoSelect.value;
     console.log(permisoValue);
 
-    if(usuarioValue != usuario_actual){
-        let path = $('#path').val();
-        tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
-        alert('Permisos dados a '+ usuarioValue)
+    if(archivoValue =="Seleccionar Archivo" || usuarioValue=="Seleccionar Usuario" || permisoValue =="Seleccionar Permiso"){
+        alert('Ingrese parametros correctos')
+
     }else {
-        alert('Ya posees esos permisos')
+
+        if(usuarioValue != usuario_actual){
+            let path = $('#path').val();
+            tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
+            alert('Permisos dados a '+ usuarioValue)
+        }else {
+            alert('Ya posees esos permisos')
+        }
+
     }
+
+
 
 }
 
