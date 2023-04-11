@@ -116,9 +116,7 @@ class Tree{
                         </a>
                     </p>
                     </div>`
-                }
-
-                if(file.type === 'image/png' || file.type === 'image/png'){
+                }else if(file.type === 'image/png' || file.type === 'image/png'){
                     code += ` <div class="col-2 folder">
                     <img src="./imgs/fileimg.png" width="85%"/>
                     <p class="h6 text-center">
@@ -127,7 +125,18 @@ class Tree{
                         </a>
                     </p>
                     </div>`
+                }else {
+                    code += ` <div class="col-2 folder">
+                    <img src="./imgs/file.png" width="85%"/>
+                    <p class="h6 text-center">
+                        <a href="${file.content}" download>
+                            ${file.name}
+                        </a>
+                    </p>
+                    </div>`
                 }
+    
+
 
             }
         })
