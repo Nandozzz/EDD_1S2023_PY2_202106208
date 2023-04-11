@@ -96,7 +96,7 @@ class Tree{
                 const url = URL.createObjectURL(archivo);
                 code += `
                         <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="85%"/>
+                        <img src="./imgs/filetxt.png" width="85%"/>
                         <p class="h6 text-center">
                             <a href="${url}" download>
                                 ${file.name}
@@ -105,14 +105,30 @@ class Tree{
                     </div>
                 `
             }else{
-                code += ` <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="85%"/>
-                        <p class="h6 text-center">
-                            <a href="${file.content}" download>
-                                ${file.name}
-                            </a>
-                        </p>
+                console.log(file.type)
+
+                if(file.type === 'application/pdf'){
+                    code += ` <div class="col-2 folder">
+                    <img src="./imgs/filepdf.png" width="85%"/>
+                    <p class="h6 text-center">
+                        <a href="${file.content}" download>
+                            ${file.name}
+                        </a>
+                    </p>
                     </div>`
+                }
+
+                if(file.type === 'image/png' || file.type === 'image/png'){
+                    code += ` <div class="col-2 folder">
+                    <img src="./imgs/fileimg.png" width="85%"/>
+                    <p class="h6 text-center">
+                        <a href="${file.content}" download>
+                            ${file.name}
+                        </a>
+                    </p>
+                    </div>`
+                }
+
             }
         })
         return code;

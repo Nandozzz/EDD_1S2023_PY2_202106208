@@ -200,7 +200,7 @@ function cargar() {
 function agregar_sparase(){
     const archivoSelect = document.getElementById("archivos");
     const archivoValue = archivoSelect.value;
-    console.log(archivoValue );
+    console.log(archivoValue);
 
 
     const usuarioSelect = document.getElementById("usuarios");
@@ -212,9 +212,13 @@ function agregar_sparase(){
     const permisoValue = permisoSelect.value;
     console.log(permisoValue);
 
-    let path = $('#path').val();
-    tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
-
+    if(usuarioValue != usuario_actual){
+        let path = $('#path').val();
+        tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
+        alert('Permisos dados a '+ usuarioValue)
+    }else {
+        alert('Ya posees esos permisos')
+    }
 
 }
 
