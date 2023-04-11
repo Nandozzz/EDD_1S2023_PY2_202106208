@@ -379,7 +379,7 @@ function cerrar_sesion(){
     tree.insertarLista(formattedDate, "Se cerró sección");
     localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
     alert("Hasta la próxima :(");
 }
