@@ -2,6 +2,15 @@
 let avlTree = new AvlTree();
 let lista = new CircularList()
 let tree =  new Tree(1, lista);
+let archivos_compartidos =[]
+
+
+if (localStorage.getItem("archivos_compartidos") !== null) {
+  // El archivo existe en el almacenamiento local
+} else {
+  // El archivo no existe en el almacenamiento local
+  localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
+}
 
 
 

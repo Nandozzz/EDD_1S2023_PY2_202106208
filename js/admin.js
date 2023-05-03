@@ -2,6 +2,8 @@
 //                      DECLARACIÓN DE LAS ESTRUCTURAS A UTILIZAR
 //--------------------------------------------------------------------------
 let avlTree = new AvlTree();
+let hashTable = new HashTable();
+let archivos_compartidos = [];
 //--------------------------------------------------------------------------
 //                      FUNCIÓN PARA MANEJAR FORMULARIOS
 //--------------------------------------------------------------------------
@@ -55,11 +57,39 @@ function showLocalStudents(){
     )
 }
 
+
+function mostrarTablaPermisos(){
+    let row = "";
+    let temp = localStorage.getItem("archivos_compartidos")
+    archivos_compartidos = JSON.parse(temp);
+
+    for(let i = 0; i < archivos_compartidos.length; i++) {
+
+        row +=`
+        <tr>
+            <th>${archivos_compartidos[i].propietario}</th>
+            <td>${archivos_compartidos[i].destinatario}</td>
+            <td>${archivos_compartidos[i].ubicacion}</td>
+            <td>${archivos_compartidos[i].archivo.name}</td>
+            <td>${archivos_compartidos[i].permisos}</td>
+        </tr>
+        `;
+    }
+
+    $('#permisosTable tbody').html(
+        row
+    )
+}
+
 //--------------------------------------------------------------------------
 //                   FUNCIÓN PARA AGREGAR RECORRIDOS
 //--------------------------------------------------------------------------
 function showStudentsForm(e){
     e.preventDefault();
+
+    let temp = localStorage.getItem("hashTable")
+    hashTable.table = JSON.parse(temp).table;
+
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     if(avlTree.root !== null){
@@ -77,6 +107,12 @@ function showStudentsForm(e){
             case 'postOrder':
                 $('#studentsTable tbody').html(
                     avlTree.postOrder()
+                )
+                break;
+            
+            case 'tablaHash':
+                $('#studentsTable tbody').html(
+                    hashTable.printTable()
                 )
                 break;
             default:
@@ -115,6 +151,15 @@ function validar() {
     }
       
 }
+
+function ingresar(){
+    hashTable=avlTree.inOrder2()
+    localStorage.setItem("hashTable", JSON.stringify(hashTable))
+    alert("Carga realizada con exito");
+}
+
+
+
 
 
 

@@ -82,6 +82,70 @@
 
 
         </div>
+        <br>
+
+
+
+        <div>
+            <div class="admin-info">
+                <h3>Cargar usuarios a Tabla Hash</h3>
+            </div>
+
+            <button  onclick="ingresar()" class="btn btn-primary w-100">Cargar</button>
+       
+
+        </div>
+        <br> 
+
+
+        <div>
+            <div class="admin-info">
+                <h3>Documentos con Permisos</h3>
+            </div>
+
+            <button onclick="mostrarTablaPermisos()"  type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenter10">Permisos</button>
+                
+                <div class="modal fade" id="exampleModalCenter10" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Permisos</h5>
+                            <br> 
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="reporte_alv">
+
+                                <div id="permisosTable">
+                                    <table class="table table-hover table-dark">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Propietario</th>
+                                                <th scope="col">Destino</th>
+                                                <th scope="col">Ubicacion</th>
+                                                <th scope="col">Archivo</th>
+                                                <th scope="col">Permisos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
+        </div>
+        <br>
 
 
       
@@ -132,9 +196,11 @@
                     <div class="col-8">
                         <select id="traversal" name="traversal" class="form-select">
                             <option selected disabled>Seleccionar Recorrido</option>
+                            <option value="tablaHash">Tabla Hash</option>
                             <option value="inOrder">In Order</option>
                             <option value="preOrder">Pre Order</option>
                             <option value="postOrder">Post Order</option>
+                            
                         </select>
                     </div>
                     <div class="col-4">
@@ -191,6 +257,7 @@
   <script src="./js/structures/circular_list.js"></script>
   <script src="./js/structures/sparase-matrix.js"></script>
   <script src="./js/structures/n-ary-tree.js"></script>
+  <script src="./js/structures/hash-table.js"></script>
   <!-- Importar Archivo Principal -->
   <script src="./js/admin.js"></script>
 

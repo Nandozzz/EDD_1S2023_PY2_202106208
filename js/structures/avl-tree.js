@@ -189,6 +189,36 @@ class AvlTree{
         }
     }
     
+    inOrder2(){
+        let hash = new HashTable();
+        let html = this.#inOrderRecursive2(this.root, hash);
+        return hash;
+    }
+
+
+    #inOrderRecursive2(current, hash){
+        let row = "";
+        if(current.left != null){
+            row += this.#inOrderRecursive2(current.left, hash);
+        }
+
+        hash.insert(current.item.carnet, current.item.nombre, current.item.password);
+        row +=`
+            <tr>
+                <th>${current.item.carnet}</th>
+                <td>${current.item.nombre}</td>
+                <td>${current.item.password}</td>
+            </tr>
+        `;
+        if(current.right != null){
+            row += this.#inOrderRecursive2(current.right, hash);
+        }
+        return row;
+    }
+
+
+
+
     //--------------------------------------------------------------------------
     //                  RECORRIDO IN ORDER
     //--------------------------------------------------------------------------

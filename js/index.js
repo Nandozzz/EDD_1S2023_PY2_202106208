@@ -4,6 +4,7 @@ let usuario_actual = localStorage.getItem("usuario_actual")
 let nombre_actual = localStorage.getItem("nombre_actual")
 let Tree2 = JSON.retrocycle(JSON.parse(localStorage.getItem(usuario_actual)));
 
+
 let tree =  new Tree(Tree2.size, Tree2.listaC);
 tree.root = Tree2.root;
 
@@ -14,6 +15,7 @@ iniciar_sesion()
 
 let valorSpan = document.getElementById("valor_id");
 valorSpan.innerHTML = `${nombre_actual}`;
+
 
 
 
@@ -198,6 +200,10 @@ function cargar() {
 
 
 function agregar_sparase(){
+
+    let archivos_compartidos = [];
+    archivos_compartidos = JSON.parse(localStorage.getItem("archivos_compartidos"))
+
     const archivoSelect = document.getElementById("archivos");
     const archivoValue = archivoSelect.value;
     console.log(archivoValue);
@@ -219,6 +225,19 @@ function agregar_sparase(){
 
         if(usuarioValue != usuario_actual){
             let path = $('#path').val();
+
+
+            let archivo = tree.getFolder(path).files.find(function (elemento){
+                if(elemento.name == archivoValue){
+                    return elemento;
+                }else{
+                    return false;
+                }
+            })
+
+            archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})
+            localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
+
             tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
             alert('Permisos dados a '+ usuarioValue)
         }else {
@@ -230,8 +249,6 @@ function agregar_sparase(){
 
 
 }
-
-
 
 
 function eliminar(){
