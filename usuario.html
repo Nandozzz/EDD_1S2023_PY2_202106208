@@ -302,15 +302,59 @@
 
 
 
-
-
-
-
-
-
-
             <div class="col-3" >
                 <button type="button" onclick="actualizarVentana()" class="btn btn-dark w-100">Mensajeria</button>    
+            </div>
+
+            <div class="col-3" >
+
+                <button onclick ="carga_edicion_archivo()" type="button" class="btn btn-dark w-100" data-toggle="modal" data-target="#exampleModalCenter11">Edicion</button>
+                
+                <div class="modal fade" id="exampleModalCenter11" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edicion</h5>
+                            <br>
+ 
+                        </div>
+                        
+                        <div class="modal-body">
+
+                            <h5>Archivo a editar</h5>
+                            <hr>
+                            <select id="archivo_editar" name="traversal" class="form-select"> </select>
+                            <br>
+
+                            <div class="modal-footer">
+
+                                <button onclick ="agregar_area()" type="button" class="btn btn-primary">Seleccionar Archivo</button>
+ 
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Informacion:</label>
+                                <textarea class="form-control" id="myTextArea" rows="10"></textarea>
+                            </div>
+                            <br>
+
+                            <div class="modal-footer">
+                                <button onclick ="guarda_archivo()" type="button" class="btn btn-primary">Guardar Cambios</button>
+                            </div>
+                            <br>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                    </div>
+                </div> 
+
             </div>
 
         </div>

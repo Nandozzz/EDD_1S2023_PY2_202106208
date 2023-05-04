@@ -113,7 +113,8 @@ const subirArchivo =  async (e) => {
             tree.getFolder(path).files.push({
                 name: nombreA, 
                 content: fr.result, 
-                type: form.file.type
+                type: form.file.type,
+                tipoN: 0
             })
             $('#carpetas').html(tree.getHTML(path));
             localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
@@ -128,7 +129,8 @@ const subirArchivo =  async (e) => {
         tree.getFolder(path).files.push({
             name: nombreA, 
             content: parseBase64, 
-            type: form.file.type
+            type: form.file.type,
+            tipoN: 0
         })
         $('#carpetas').html(tree.getHTML(path));
         
@@ -234,6 +236,7 @@ function agregar_sparase(){
                     return false;
                 }
             })
+            archivo.tipoN = 1;
 
             archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})
             localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
@@ -458,4 +461,155 @@ function mostrarTablaPermisos(){
     $('#permisosTable tbody').html(
         row
     )
+}
+
+
+
+function carga_edicion_archivo(){
+    let temp = localStorage.getItem("archivos_compartidos")
+    archivos_compartidos = JSON.parse(temp);
+    let opciones2 = [];
+    let opciones = [];
+
+
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.files);
+
+    document.getElementById("myTextArea").value = "";
+    const selectElement2 = document.getElementById("archivo_editar");
+    selectElement2.disabled = false;
+    selectElement2.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement2.innerHTML = "<option selected disabled>Seleccionar Archivo</option>";
+    opciones2 = carpetaP.files;
+
+    for (let i = 0; i < opciones2.length; i++) {
+        if(opciones2[i].type == 'text/plain'){
+            const opcion = opciones2[i].name + " (En panel actual)";
+            const elementoOpcion = document.createElement("option");
+            elementoOpcion.value = opcion ;
+            elementoOpcion.textContent = opcion;
+            selectElement2.appendChild(elementoOpcion);
+        }
+
+    }
+
+    opciones = archivos_compartidos;
+    for (let i = 0; i < opciones.length; i++) {
+
+        if(opciones[i].archivo.type == 'text/plain' && usuario_actual == archivos_compartidos[i].destinatario){
+        const opcion = opciones[i].archivo.name + " (En compartido contigo)";
+        const elementoOpcion = document.createElement("option");
+        elementoOpcion.value = opcion;
+        elementoOpcion.textContent = opcion;
+        selectElement2.appendChild(elementoOpcion);
+        }
+    }
+
+}
+
+function agregar_area(){
+
+    let temp = localStorage.getItem("archivos_compartidos")
+    archivos_compartidos = JSON.parse(temp);
+
+    const archivoSelect = document.getElementById("archivo_editar");
+    let archivoValue = archivoSelect.value;
+    console.log(archivoValue);
+
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.files);
+
+    
+
+    if(archivoValue =="Seleccionar Archivo"){
+        alert('Ingrese parametros correctos')
+    }else{
+
+        archivoSelect.disabled = true;
+        if(archivoValue.includes(" (En panel actual)")){
+            archivoValue = archivoValue.replace(" (En panel actual)", "");
+
+            for (let i = 0; i < carpetaP.files.length; i++) {
+                if(carpetaP.files[i].name == archivoValue){
+
+                    document.getElementById("myTextArea").value = carpetaP.files[i].content;
+
+                }
+        
+            }
+        }
+
+
+        if(archivoValue.includes(" (En compartido contigo)")){
+
+            archivoValue = archivoValue.replace(" (En compartido contigo)", "");
+
+            for (let i = 0; i < archivos_compartidos.length; i++) {
+                if(archivos_compartidos[i].archivo.name == archivoValue){
+
+                    document.getElementById("myTextArea").value = archivos_compartidos[i].archivo.content;
+
+                }
+        
+            }
+
+        }
+
+    }
+
+
+}
+
+
+function guarda_archivo(){
+
+    let temp = localStorage.getItem("archivos_compartidos")
+    archivos_compartidos = JSON.parse(temp);
+
+    const archivoSelect = document.getElementById("archivo_editar");
+    let archivoValue = archivoSelect.value;
+    console.log(archivoValue);
+
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.files);
+
+    if(archivoValue.includes(" (En panel actual)")){
+        archivoValue = archivoValue.replace(" (En panel actual)", "");
+
+        for (let i = 0; i < carpetaP.files.length; i++) {
+            if(carpetaP.files[i].name == archivoValue){
+
+                let texto = document.getElementById("myTextArea").value
+                carpetaP.files[i].content = texto
+
+
+
+            }
+    
+        }
+        localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
+    }
+
+    if(archivoValue.includes(" (En compartido contigo)")){
+
+        archivoValue = archivoValue.replace(" (En compartido contigo)", "");
+
+        for (let i = 0; i < archivos_compartidos.length; i++) {
+            if(archivos_compartidos[i].archivo.name == archivoValue){
+
+               let texto = document.getElementById("myTextArea").value;
+               archivos_compartidos[i].archivo.content = texto;
+
+            }
+    
+        }
+        localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
+
+    }
+
+    $('#carpetas').html(tree.getHTML(path))
+    
 }
