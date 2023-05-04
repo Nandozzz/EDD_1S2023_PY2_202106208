@@ -257,11 +257,60 @@
     <div class="col-15 p-5">
         <div class="row">
             
-            <div class="col-2 pt-2" >
-                <button type="button" onclick="retornarInicio()" class="btn btn-dark w-100">Inicio</button>    
+            <div class="col-3" >
+        
+                <button onclick ="mostrarTablaPermisos()" type="button" class="btn btn-dark w-100" data-toggle="modal" data-target="#exampleModalCenter10">Archivos Compartidos</button>
+                
+                <div class="modal fade" id="exampleModalCenter10" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Archivos Compartidos</h5>
+                            <br>
+ 
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div id="permisosTable">
+                                <table class="table table-hover table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Propietario</th>
+                                            <th scope="col">Destino</th>
+                                            <th scope="col">Ubicacion</th>
+                                            <th scope="col">Archivo</th>
+                                            <th scope="col">Permisos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                
             </div>
-            <div class="col-2 pt-2" >
-                <button type="button" onclick="actualizarVentana()" class="btn btn-dark w-100">Actualizar</button>    
+
+
+
+
+
+
+
+
+
+
+            <div class="col-3" >
+                <button type="button" onclick="actualizarVentana()" class="btn btn-dark w-100">Mensajeria</button>    
             </div>
 
         </div>

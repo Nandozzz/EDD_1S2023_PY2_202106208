@@ -65,21 +65,40 @@ function mostrarTablaPermisos(){
 
     for(let i = 0; i < archivos_compartidos.length; i++) {
 
-        row +=`
-        <tr>
-            <th>${archivos_compartidos[i].propietario}</th>
-            <td>${archivos_compartidos[i].destinatario}</td>
-            <td>${archivos_compartidos[i].ubicacion}</td>
-            <td>${archivos_compartidos[i].archivo.name}</td>
-            <td>${archivos_compartidos[i].permisos}</td>
-        </tr>
-        `;
+
+        if(archivos_compartidos[i].archivo.type === 'text/plain'){
+            let archivo = new Blob([archivos_compartidos[i].archivo.content], {type: archivos_compartidos[i].archivo.type} );
+            const url = URL.createObjectURL(archivo);
+
+            row +=`
+            <tr>
+                <th>${archivos_compartidos[i].propietario}</th>
+                <td>${archivos_compartidos[i].destinatario}</td>
+                <td>${archivos_compartidos[i].ubicacion}</td>
+                <td> <a href="${url}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                <td>${archivos_compartidos[i].permisos}</td>
+            </tr>
+            `;
+
+        }else{
+
+            row +=`
+            <tr>
+                <th>${archivos_compartidos[i].propietario}</th>
+                <td>${archivos_compartidos[i].destinatario}</td>
+                <td>${archivos_compartidos[i].ubicacion}</td>
+                <td> <a href="${archivos_compartidos[i].archivo.content}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                <td>${archivos_compartidos[i].permisos}</td>
+            </tr>
+            `;
+        }
     }
 
     $('#permisosTable tbody').html(
         row
     )
 }
+
 
 //--------------------------------------------------------------------------
 //                   FUNCIÓN PARA AGREGAR RECORRIDOS
