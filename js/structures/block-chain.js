@@ -148,15 +148,15 @@ class BlockChain{
                                 </tr>
                                 <tr>
                                     <th scope="row">Message</th>
-                                    <td>${temp.encriptado}</td>
+                                    <td style="max-width: 200px; word-wrap: break-word;">${temp.encriptado}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Previus Hash</th>
-                                    <td>${temp.previusHash}</td>
+                                    <td style="max-width: 200px; word-wrap: break-word;">${temp.previusHash}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Hash del Bloque</th>
-                                    <td>${temp.hash}</td>
+                                    <td style="max-width: 200px; word-wrap: break-word;">${temp.hash}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -169,6 +169,31 @@ class BlockChain{
         }
         return "";
     }
+
+    graph() {
+        let temp = this.head;
+        let conn = "";
+        let nodes = "";
+        let counter = 0;
+        let rango = "";
+        while (temp.next != null) {
+        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash} <br/> Mensaje: ${temp.message}>];\n`;
+        conn += `N${counter}->`;
+        rango += `N${counter} `
+        temp = temp.next;
+        counter++;
+        }
+        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash} <br/> Mensaje: ${temp.message}>];\n`;
+        conn += `N${counter}`;
+        rango += `N${counter} `
+    
+        return  "digraph G {\n" + "node[shape=rectangle, style=filled, color=black, fillcolor=white, width=4];\n" + "rankdir=TB;\n" + "nodesep=1;\n" + nodes + conn + ";\n" + "\n}"
+        
+    
+    }
+    
+
+    
 
     aesEncrypt(message, key) {
         const encrypted = CryptoJS.AES.encrypt(message, key);

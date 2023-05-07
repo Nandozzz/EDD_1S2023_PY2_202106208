@@ -245,6 +245,19 @@ function getBlock(index){
 }
 
 
+function blockChainGraph(){
+    let BlockChain2 = JSON.parse(localStorage.getItem("blockChain"));
+
+    blockChain.head = BlockChain2.head;
+    blockChain.end = BlockChain2.end;
+    blockChain.size = BlockChain2.size;
+
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `${blockChain.graph()}`
+    console.log(body);
+    $("#graph").attr("src", url + encodeURIComponent(body));
+}
+
 
 
 $( document ).ready(showLocalStudents);

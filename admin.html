@@ -51,7 +51,7 @@
 
         <div>
             <div class="admin-info">
-                <h3>Reporte de Árbol AVL</h3>
+                <h3>Reportes</h3>
             </div>
 
             <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenter9">Reporte</button>
@@ -72,8 +72,9 @@
                         </div>
 
                         <div class="modal-footer">
-                        <button onclick="showAvlGraph()" class="btn btn-primary w-80">Gráfica del Arbol</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button onclick="blockChainGraph()" class="btn btn-primary w-80">Gráfica bloques de la Blockchain</button>
+                            <button onclick="showAvlGraph()" class="btn btn-primary w-80">Gráfica del Arbol</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                         </div>
                     </div>
@@ -174,7 +175,7 @@
                                 <div class="col-2">
                                     <button class="btn btn-danger w-100" onclick="getBlock(-1)"> << Anterior</button>
                                 </div>
-                                <div class="col-8" id="show-block">
+                                <div class="col-8" id="show-block" >
                 
                                 </div>
                                 <div class="col-2">
