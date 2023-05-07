@@ -8,18 +8,20 @@ class Tnode{
         this.children = []; // TODOS LOS NODOS HIJOS
         this.id = null; // PARA GENERAR LA GRÁFICA
         this.matriz = new SparseMatrix();
-        this.matriz2 = new SparseMatrix()
+        this.matriz2 = new SparseMatrix();
+        
     }
 
 }
 
 
 class Tree{
-    constructor(size, lista){
+    constructor(size, lista, grafo){
         this.root = new Tnode('/');
         this.root.id = 0;
-        this.size = size // Para generar los ids
+        this.size = size; // Para generar los ids
         this.listaC = lista;
+        this.grafoC = grafo
     }
 
     insert(folderName, fatherPath){ 
@@ -116,7 +118,7 @@ class Tree{
                         </a>
                     </p>
                     </div>`
-                }else if(file.type === 'image/png' || file.type === 'image/png'){
+                }else if(file.type === 'image/png' || file.type === 'image/jpeg'){
                     code += ` <div class="col-2 folder">
                     <img src="./imgs/fileimg.png" width="85%"/>
                     <p class="h6 text-center">
@@ -252,6 +254,45 @@ class Tree{
         }
     }
     
+
+
+    insertGrafo(folderName, fatherPath){
+        let temp = this.grafoC
+        let grafo2 = new Graph()
+
+            
+        grafo2.root= temp.root;
+        grafo2.size = temp.size;
+
+        grafo2.insert(folderName, fatherPath);
+
+        this.grafoC = grafo2;
+    }
+
+
+    removeGrafo(folderName, fatherPath){
+        let temp = this.grafoC
+        let grafo2 = new Graph()
+
+            
+        grafo2.root= temp.root;
+        grafo2.size = temp.size;
+
+        grafo2.remove(folderName, fatherPath);
+
+        this.grafoC = grafo2;
+    }
+
+
+    graphGrafo(){
+        let grafo2 = new Graph()
+        
+        grafo2.root= this.grafoC.root;
+
+        return grafo2.graph();
+
+    }
+
 
 
 

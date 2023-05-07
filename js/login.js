@@ -1,7 +1,8 @@
 
 let avlTree = new AvlTree();
 let lista = new CircularList()
-let tree =  new Tree(1, lista);
+let grafo = new Graph(1)
+let tree =  new Tree(1, lista, grafo);
 let archivos_compartidos =[]
 
 

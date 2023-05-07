@@ -21,6 +21,8 @@ function loadStudentsForm(e) {
             //AGREGAR A LA TABLA LOS ALUMNOS CARGADOS 
             $('#studentsTable tbody').html(
                 studentsArray.map((item, index) => {
+
+
                     return(`
                         <tr>
                             <th>${item.carnet}</th>
@@ -180,9 +182,6 @@ function ingresar(){
 
 
 
-
-
-
 function cerrar_sesion(){
 
 
@@ -201,6 +200,7 @@ function showAvlGraph(){
     console.log(body);
     $("#graph").attr("src", url + body);
 }
+
 
 
 

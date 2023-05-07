@@ -202,6 +202,8 @@ class AvlTree{
             row += this.#inOrderRecursive2(current.left, hash);
         }
 
+       
+
         hash.insert(current.item.carnet, current.item.nombre, current.item.password);
         row +=`
             <tr>
@@ -216,7 +218,7 @@ class AvlTree{
         return row;
     }
 
-
+    
 
 
     //--------------------------------------------------------------------------

@@ -5,7 +5,7 @@ let nombre_actual = localStorage.getItem("nombre_actual")
 let Tree2 = JSON.retrocycle(JSON.parse(localStorage.getItem(usuario_actual)));
 
 
-let tree =  new Tree(Tree2.size, Tree2.listaC);
+let tree =  new Tree(Tree2.size, Tree2.listaC, Tree2.grafoC );
 tree.root = Tree2.root;
 
 
@@ -28,6 +28,7 @@ function crearCarpeta(e){
     let folderName = nuevoNombre()
     let path =  $('#path').val();
     tree.insert(folderName, path);
+    tree.insertGrafo(folderName, path);
     alert("Todo bien!")
 
     const now = new Date();
@@ -56,6 +57,7 @@ function retornarInicio(){
 function showTreeGraph(){
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${tree.graph()} }`
+    console.log(body);
     $("#graph").attr("src", url + body);
     localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
@@ -84,6 +86,14 @@ function showListGraph(){
     let body = `${tree.listaC.graph()}`
     console.log(body);
     $("#graph").attr("src", url + body);
+}
+
+function showGrafhGraph(){
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `digraph G { ${tree.graphGrafo()}}`
+    console.log(body);
+    $("#graph").attr("src", url + body);
+    localStorage.setItem(usuario_actual, JSON.stringify(JSON.decycle(tree)));
 }
 
 
@@ -203,6 +213,7 @@ function cargar() {
 
 function agregar_sparase(){
 
+    let archivo_ele;
     let archivos_compartidos = [];
     archivos_compartidos = JSON.parse(localStorage.getItem("archivos_compartidos"))
 
@@ -220,34 +231,53 @@ function agregar_sparase(){
     const permisoValue = permisoSelect.value;
     console.log(permisoValue);
 
-    if(archivoValue =="Seleccionar Archivo" || usuarioValue=="Seleccionar Usuario" || permisoValue =="Seleccionar Permiso"){
-        alert('Ingrese parametros correctos')
+    let path = $('#path').val();
+    carpetaP = tree.getFolder(path);
+    console.log(carpetaP.files);
 
-    }else {
+    for (let i = 0; i < carpetaP.files.length; i++) {
+        if(carpetaP.files[i].name == archivoValue){
 
-        if(usuarioValue != usuario_actual){
-            let path = $('#path').val();
-
-
-            let archivo = tree.getFolder(path).files.find(function (elemento){
-                if(elemento.name == archivoValue){
-                    return elemento;
-                }else{
-                    return false;
-                }
-            })
-            archivo.tipoN = 1;
-
-            archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})
-            localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
-
-            tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
-            alert('Permisos dados a '+ usuarioValue)
-        }else {
-            alert('Ya posees esos permisos')
+            archivo_ele = carpetaP.files[i]
         }
 
     }
+
+    if(archivo_ele.type == "text/plain" && permisoValue=="r" || archivo_ele.type == "text/plain" && permisoValue=="w" || archivo_ele.type == "text/plain" && permisoValue=="r-w" || archivo_ele.type == "image/png" && permisoValue=="r" || archivo_ele.type == "image/jpeg" && permisoValue=="r" || archivo_ele.type == "application/pdf" && permisoValue=="r"){
+        
+        if(archivoValue =="Seleccionar Archivo" || usuarioValue=="Seleccionar Usuario" || permisoValue =="Seleccionar Permiso"){
+            alert('Ingrese parametros correctos')
+
+        }else {
+
+            if(usuarioValue != usuario_actual){
+                let path = $('#path').val();
+
+
+                let archivo = tree.getFolder(path).files.find(function (elemento){
+                    if(elemento.name == archivoValue){
+                        return elemento;
+                    }else{
+                        return false;
+                    }
+                })
+                archivo.tipoN = 1;
+
+                archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})
+                localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
+
+                tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
+                alert('Permisos dados a '+ usuarioValue)
+            }else {
+                alert('Ya posees esos permisos')
+            }
+
+        }
+    } else {
+        alert('Solo los archivos de tipo texto pueden tener el permiso de w o r-w')
+    }
+
+
 
 
 
@@ -288,6 +318,7 @@ function eliminarCarpeta(){
     }
 
     tree.remove(carpetaValue, path);
+    tree.removeGrafo(carpetaValue, path);
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear().toString().padStart(4, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
@@ -431,27 +462,55 @@ function mostrarTablaPermisos(){
             let archivo = new Blob([archivos_compartidos[i].archivo.content], {type: archivos_compartidos[i].archivo.type} );
             const url = URL.createObjectURL(archivo);
 
-            row +=`
-            <tr>
-                <th>${archivos_compartidos[i].propietario}</th>
-                <td>${archivos_compartidos[i].destinatario}</td>
-                <td>${archivos_compartidos[i].ubicacion}</td>
-                <td> <a href="${url}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
-                <td>${archivos_compartidos[i].permisos}</td>
-            </tr>
-            `;
+            if(archivos_compartidos[i].permisos === 'r' || archivos_compartidos[i].permisos === 'r-w'){
+                row +=`
+                <tr>
+                    <th>${archivos_compartidos[i].propietario}</th>
+                    <td>${archivos_compartidos[i].destinatario}</td>
+                    <td>${archivos_compartidos[i].ubicacion}</td>
+                    <td> <a href="${url}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                    <td>${archivos_compartidos[i].permisos}</td>
+                </tr>
+                `;
+
+            }else{
+                row +=`
+                <tr>
+                    <th>${archivos_compartidos[i].propietario}</th>
+                    <td>${archivos_compartidos[i].destinatario}</td>
+                    <td>${archivos_compartidos[i].ubicacion}</td>
+                    <td> <a class="btn btn-secondary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                    <td>${archivos_compartidos[i].permisos}</td>
+                </tr>
+                `;
+            }
+
+
 
         }else{
 
-            row +=`
-            <tr>
-                <th>${archivos_compartidos[i].propietario}</th>
-                <td>${archivos_compartidos[i].destinatario}</td>
-                <td>${archivos_compartidos[i].ubicacion}</td>
-                <td> <a href="${archivos_compartidos[i].archivo.content}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
-                <td>${archivos_compartidos[i].permisos}</td>
-            </tr>
-            `;
+            if(archivos_compartidos[i].permisos == 'r' || archivos_compartidos[i].permisos == 'r-w'){
+                row +=`
+                <tr>
+                    <th>${archivos_compartidos[i].propietario}</th>
+                    <td>${archivos_compartidos[i].destinatario}</td>
+                    <td>${archivos_compartidos[i].ubicacion}</td>
+                    <td> <a href="${archivos_compartidos[i].archivo.content}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                    <td>${archivos_compartidos[i].permisos}</td>
+                </tr>
+                `;
+
+            }else{
+                row +=`
+                <tr>
+                    <th>${archivos_compartidos[i].propietario}</th>
+                    <td>${archivos_compartidos[i].destinatario}</td>
+                    <td>${archivos_compartidos[i].ubicacion}</td>
+                    <td> <a class="btn btn-secondary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
+                    <td>${archivos_compartidos[i].permisos}</td>
+                </tr>
+                `;
+            }
         }
 
 
@@ -598,7 +657,7 @@ function guarda_archivo(){
         archivoValue = archivoValue.replace(" (En compartido contigo)", "");
 
         for (let i = 0; i < archivos_compartidos.length; i++) {
-            if(archivos_compartidos[i].archivo.name == archivoValue){
+            if(archivos_compartidos[i].archivo.name == archivoValue && archivos_compartidos[i].permisos == "w" || archivos_compartidos[i].archivo.name == archivoValue && archivos_compartidos[i].permisos == "r-w"){
 
                let texto = document.getElementById("myTextArea").value;
                archivos_compartidos[i].archivo.content = texto;
@@ -611,5 +670,7 @@ function guarda_archivo(){
     }
 
     $('#carpetas').html(tree.getHTML(path))
+    alert("Se modifico correctamente el archivo")
     
 }
+

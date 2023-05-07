@@ -20,11 +20,13 @@ class HashTable{
 
     // MÉTODO INSERTAR ELEMENTO
     insert(carnet, nombre, password){
+
+        let tem = this.sha256(password);
         // OBTENER EL ÍNDICE DE LA FÓRMULA 
         // FÓRMULA: (SUMA ASCII's DEL CARNET) % CAPACIDAD ACTUAL 
         let indice = this.calcularIndice(carnet);
         // CREAR NUEVO NODO
-        let nodoNuevo = new HashNode(carnet, nombre, password);
+        let nodoNuevo = new HashNode(carnet, nombre, tem);
         // COMPROBAR QUE EL INDICE SEA MENOR QUE A CAPACIADAD
         if(indice < this.capacidad){
             // VERIFICAR SI EN EL LA POSICIÓN DEL ARRAY ES NULO
@@ -170,11 +172,12 @@ class HashTable{
 
 
     printTable() {
-        console.table(this.table)
         let row = "";
         for(let i = 0; i < this.table.length; i++) {
 
             if(this.table[i] != undefined){
+
+                
                 
                 row +=`
                 <tr>
@@ -186,7 +189,17 @@ class HashTable{
             }
 
         }
+        console.table(this.table)
         console.log("hola edoardo")
         return row;
     }
+    
+
+    sha256(message) {
+        const hash = CryptoJS.SHA256(message);
+        return hash.toString(CryptoJS.enc.Hex);
+    }
+
 }
+
+
