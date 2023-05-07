@@ -40,16 +40,37 @@ un árbol AVL que deberán recorrer para mostrar los datos, para esto se usará
 el recorrido In-Orden por defecto, el administrador podrá elegir si quiere otro
 tipo de recorrido sea Post-Orden o Pre-Orden.
 
+
+![Admin](https://drive.google.com/uc?id=15t2SSQ1R_72IrWpQNutlAVpRHTw_aoXE)
+
 - `Carga Masiva`: El administrador tendrá la opción de subir un archivo de tipo JSON con los datos de
 los estudiantes, para facilitar el manejo de los estudiantes aceptados.
 
-![Admin](https://drive.google.com/uc?export=view&id=1mtjMcA1ZBjrsK3BHV-106Vco_OSBf12B)
-
-- `Reportes de admin`: Para las funciones de administrador, este contará con un apartado de reportes en el
+- `Reportes`: Para las funciones de administrador, este contará con un apartado de reportes en el
 que se muestre el Árbol AVL con todos los estudiantes y la altura que posee cada
 nodo de la estructura.
+ 
+  Aparte contará con un nuevo reporte gráfico, mostrará todo los bloques de la Blockchain en forma de lista de bloques.
+  
+![R_Admin](https://drive.google.com/uc?export=download&id=1Bz9VoBs-hp54tJaR9b4zAxj6AdVXqgxu)
 
-![R_Admin](https://drive.google.com/uc?id=1WDK-7uCL5XnnGjVN_IpF4cl0eh3e_eR9)
+  
+- `Reporte de Bloques`: El administrador podrá visualizar de manera general todo el sistema de mensajería
+mediante un reporte, que se muestra a continuación, teniendo en cuenta que el
+mensaje siempre debe visualizarse encriptado para mayor seguridad, este sera
+generado un textarea donde cargara esa información con la posibilidad de ver cada
+bloque.
+
+![Rb_Admin](https://drive.google.com/uc?id=1oiB5ANHPSD-l3t24uQIFW7Wr-fedBIE6)
+
+
+- `Documentos con Permisos`: El administrador podrá visualizar una tabla general de los permisos de los usuarios, donde se podrá visualizar los archivos
+compartidos dentro del sistema, este mostrará el Usuario Propietario, el Usuario Destino, Ruta del archivo, Nombre de Archivo, Permiso del archivo.
+
+![Doc_Admin](https://drive.google.com/uc?export=download&id=1Z1OxQ-g98dfFwHQVNGElp3TMgZBlVol0)
+
+
+
 
 
 # Apantalla del user
@@ -91,7 +112,8 @@ no la carpeta que se quiera eliminar.
 ello se usará una interfaz donde se especifique al usuario, el archivo y los permisos
 que le dará, para ello se usará los siguientes sufijos: r (permisos para leer) y w (permisos para escribir).
 
-![User](https://drive.google.com/uc?id=1VlAguSAreK73cu1T8YLP8-UZ96wyJue0)
+![User](https://drive.google.com/uc?export=download&id=1a-w5mG84VVkOMVZY6Xomp2WPoWgy71Y7)
+
 
 - `Reportes de user`: El usuario tendrá la opción de crear el reporte del árbol N-ario de archivos del
 usuario logueado.
@@ -106,7 +128,39 @@ un mensaje que diga, “no se puede crear la matriz por falta de archivos”.
 al momento de crear o eliminar un archivo o carpeta de deberá de mostrar en una
 lista enlazada circular.
 
+  El usuario tendrá la opción de crear el reporte del grafo dirigido, para visualizar las
+relaciones y conexiones que hay entre carpetas
+
 
 ![R_User](https://drive.google.com/uc?export=download&id=14SRG9c-BCC60xBbL3n6e8cb0dFOiwr8p)
+
+![Grafo](https://drive.google.com/uc?export=download&id=1t9h2MiJH0UcYZBqCpjpSX2JPNGWm-lu-)
+
+
+- `Archivos Compartidos`: El usuario tendrá un apartado nuevo llamado Compartidos Conmigo en el cual podrá
+visualizar los archivos compartidos, donde se mostrará el contenido del mismo.
+
+![ArC_Userd](https://drive.google.com/uc?export=download&id=1I5_-yVLH3ATsE9VSr5OpNdIjhHPfjLgt)
+
+
+- `Edicion`: El usuario tendrá un apartado nuevo llamado Edicion en el cual podrá
+visualizar y editar los archivos de tipo texto que tenga en su apartado guardado o que le hayan compartido.
+
+![Ed](https://drive.google.com/uc?id=1MM3blm9AJ5NKrmjFYYQV-miOSQsn768I)
+
+- `Mensajeria`: Con el fin de ayudar la comunicación entre los estudiantes, se realizará un apartado
+nuevo donde el estudiante podrá enviar mensajes a otros usuarios, los mensajes
+para seguridad de la conversación entre los estudiantes, los mensajes deben ir
+encriptados, cuando el usuario emisor envía un mensaje, el texto debe ser
+encriptado y quedarse así hasta que el usuario receptor inicie sesión y pueda revisar
+los mensajes nuevos y se desencripta el mensaje para su visualización. Para el
+manejo de la mensajería se utilizará el sistema de BlockChain para la
+seguridad e integridad del mismo, para esto se utilizara el siguiente sistema
+de almacenamiento, su similitud es al de una lista doble enlazada de nodos.
+
+![Msg](https://drive.google.com/uc?export=download&id=1IwBBAncT6A5kyhrUq3Kq3WlFAP2NpkV_)
+
+
+
 
 
