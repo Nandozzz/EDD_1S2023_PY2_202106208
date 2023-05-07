@@ -304,7 +304,67 @@
 
 
             <div class="col-3" >
-                <button type="button" onclick="actualizarVentana()" class="btn btn-dark w-100">Mensajeria</button>    
+                <button onclick ="cargar_estudiantes()" type="button" class="btn btn-dark w-100" data-toggle="modal" data-target="#exampleModalCenter12">Mensajeria</button> 
+                
+                <div class="modal fade" id="exampleModalCenter12" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Chat actual</h5>
+                            <br>
+ 
+                        </div>
+                        
+                        <div class="modal-body">
+                            
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-8">
+                                    <!-- SELECCIONAR ESTUDIANTE EMISOR -->
+                                    <h4></h4>
+                                    <select class="form-select" id="receiver" onchange="updateChats()">
+                                        <option value="">--Seleccionar--</option>
+                                    </select>
+                                    <!-- ----------------------------------------------------- -->
+                    
+                                    <!-- DIV PARA MOSTRAR EL CHAT DEL EMISOR -->
+                                    <div class="container mt-3 p-0 border" style="height:400px;overflow-y: scroll;" id="transmitter-chat">
+                    
+                                    </div>
+                                    <!-- ----------------------------------------------------- -->
+                    
+                                    <!-- FORMULARIO PARA ESCRIBIR MENSAJES EMISOR -->
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="msg-transmitter"/>
+                                            </div>
+                                            <div class="col-3">
+                                                <button class="btn btn-success w-100" onclick="sendMessage('transmitter')">Enviar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ----------------------------------------------------- -->
+                    
+                                </div>
+                    
+                                <div class="col-1"></div>
+                    
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button onclick ="updateChats()" type="button" class="btn btn-primary">Actualizar Chat</button>
+
+                        </div>
+                    </div>
+                    </div>
+                </div> 
             </div>
 
             <div class="col-3" >
@@ -407,9 +467,12 @@
   integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" 
   crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+
 
   <script src="./js/lib/cycle.js"></script>
   <script src="./js/structures/graph.js"></script>
+  <script src="./js/structures/block-chain.js"></script>
   <script src="./js/structures/circular_list.js"></script>
   <script src="./js/structures/sparase-matrix.js"></script>
   <script src="./js/structures/n-ary-tree.js"></script>

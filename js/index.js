@@ -4,6 +4,13 @@ let usuario_actual = localStorage.getItem("usuario_actual")
 let nombre_actual = localStorage.getItem("nombre_actual")
 let Tree2 = JSON.retrocycle(JSON.parse(localStorage.getItem(usuario_actual)));
 
+let BlockChain2 = JSON.retrocycle(JSON.parse(localStorage.getItem("blockChain")));
+
+let blockChain = new BlockChain();
+blockChain.head = BlockChain2.head;
+blockChain.end = BlockChain2.end;
+blockChain.size = BlockChain2.size;
+
 
 let tree =  new Tree(Tree2.size, Tree2.listaC, Tree2.grafoC );
 tree.root = Tree2.root;
@@ -176,7 +183,7 @@ function cargar() {
     selectElement.innerHTML = "<option selected disabled>Seleccionar Usuario</option>";
     opciones = estudiantes;
     for (let i = 0; i < opciones.length; i++) {
-        const opcion = opciones[i];
+        const opcion = opciones[i].carnet;
         const elementoOpcion = document.createElement("option");
         elementoOpcion.value = opcion;
         elementoOpcion.textContent = opcion;
@@ -214,6 +221,7 @@ function cargar() {
 function agregar_sparase(){
 
     let archivo_ele;
+    let bandera = false;
     let archivos_compartidos = [];
     archivos_compartidos = JSON.parse(localStorage.getItem("archivos_compartidos"))
 
@@ -263,7 +271,19 @@ function agregar_sparase(){
                 })
                 archivo.tipoN = 1;
 
-                archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})
+                for(let i = 0; i < archivos_compartidos.length; i++){
+                    if(archivos_compartidos[i].archivo.name == archivo.name && archivos_compartidos[i].propietario == usuario_actual && archivos_compartidos[i].destinatario== usuarioValue){
+                        bandera = true;
+                        archivos_compartidos[i].permisos= permisoValue
+                    }
+
+                }
+
+                if(bandera == false){
+                    archivos_compartidos.push({propietario: usuario_actual, destinatario: usuarioValue, ubicacion: path, archivo:archivo, permisos:permisoValue})  
+                }
+
+
                 localStorage.setItem("archivos_compartidos", JSON.stringify(archivos_compartidos))
 
                 tree.insertFile(path, archivoValue, usuarioValue, permisoValue);
@@ -556,7 +576,7 @@ function carga_edicion_archivo(){
     opciones = archivos_compartidos;
     for (let i = 0; i < opciones.length; i++) {
 
-        if(opciones[i].archivo.type == 'text/plain' && usuario_actual == archivos_compartidos[i].destinatario){
+        if(opciones[i].archivo.type == 'text/plain' && usuario_actual == archivos_compartidos[i].destinatario && archivos_compartidos[i].permisos == "w" || opciones[i].archivo.type == 'text/plain' && usuario_actual == archivos_compartidos[i].destinatario && archivos_compartidos[i].permisos == "r-w"){
         const opcion = opciones[i].archivo.name + " (En compartido contigo)";
         const elementoOpcion = document.createElement("option");
         elementoOpcion.value = opcion;
@@ -673,4 +693,90 @@ function guarda_archivo(){
     alert("Se modifico correctamente el archivo")
     
 }
+
+function cargar_estudiantes(){
+
+    let temp = localStorage.getItem("avlTree")
+    estudiantes = JSON.parse(temp).estudiantes;
+
+    const selectElement = document.getElementById("receiver");
+    selectElement.innerHTML = ""; // Eliminar opciones antiguas
+    selectElement.innerHTML = "<option selected disabled>Seleccionar Usuario</option>";
+    opciones = estudiantes;
+    for (let i = 0; i < opciones.length; i++) {
+        if(opciones[i].nombre != nombre_actual){
+            const opcion = opciones[i].nombre;
+            const elementoOpcion = document.createElement("option");
+            elementoOpcion.value = opcion;
+            elementoOpcion.textContent = opcion;
+            selectElement.appendChild(elementoOpcion);
+        }
+
+    }
+}
+
+async function sendMessage(whoSend){
+    // OBTENER VALORES DEL SELECT 
+    let carnet_transmitter = "";
+    let carnet_receiver = "";
+
+    let transmitter = nombre_actual;
+    let receiver = $('#receiver').val();
+
+    let temp = localStorage.getItem("avlTree")
+    estudiantes = JSON.parse(temp).estudiantes;
+
+    opciones = estudiantes;
+    for (let i = 0; i < opciones.length; i++) {
+        if(opciones[i].nombre == nombre_actual){
+           carnet_transmitter = opciones[i].carnet
+        }
+
+        if(opciones[i].nombre == receiver){
+            carnet_receiver = opciones[i].carnet 
+        }
+
+    }
+
+
+    const formattedDateTime = `${(new Date()).getDate().toString().padStart(2, '0')}-${((new Date()).getMonth() + 1).toString().padStart(2, '0')}-${(new Date()).getFullYear().toString().padStart(4, '0')} :: ${(new Date()).getHours().toString().padStart(2, '0')}:${(new Date()).getMinutes().toString().padStart(2, '0')}:${(new Date()).getSeconds().toString().padStart(2, '0')}`;
+
+    
+    // VERIFICAR QUE HAYA SELECCIONADO UN USUARIO
+    if(transmitter && receiver){
+        switch(whoSend){
+            case 'transmitter':
+                // OBTENER MENSAJE A ENVIAR
+                let msgt = $('#msg-transmitter').val();
+                // INSERTAR MENSAJE EN BLOCKCHAIN
+                await blockChain.insert(transmitter, receiver, msgt, formattedDateTime, carnet_transmitter, carnet_receiver);
+                $('#msg-transmitter').val("");
+            break;
+            case 'receiver':
+                // OBTENER MENSAJE A ENVIAR
+                let msgr = $('#msg-receiver').val();
+                // INSERTAR MENSAJE EN BLOCKCHAIN
+                await blockChain.insert(receiver, transmitter, msgr, formattedDateTime, carnet_transmitter, carnet_receiver);
+                $('#msg-receiver').val("");
+            break;
+        }
+
+
+        alert("Mensaje enviado");
+        localStorage.setItem("blockChain", JSON.stringify(JSON.decycle(blockChain)));
+        // ACTUALIZAR CHATS
+        updateChats();
+    }else{
+        alert("No ha seleccionado Receptop o Emisor");
+    }
+}
+
+
+function updateChats(){
+    let transmitter = nombre_actual;
+    let receiver = $('#receiver').val();
+    $('#transmitter-chat').html(blockChain.getMessages(transmitter, receiver));
+    $('#receiver-chat').html(blockChain.getMessages(receiver, transmitter));
+}
+
 

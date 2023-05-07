@@ -17,6 +17,7 @@ if (localStorage.getItem("archivos_compartidos") !== null) {
 
 
 
+
 function validar() {
   var carnet = document.getElementById("carnet").value;
   var contrasena = document.getElementById("password").value;

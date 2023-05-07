@@ -148,6 +148,56 @@
         <br>
 
 
+        <div>
+            <div class="admin-info">
+                <h3>Reporte de Bloques </h3>
+            </div>
+
+            <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenter11">Bloques</button>
+                
+                <div class="modal fade" id="exampleModalCenter11" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Bloques de la Blockchain</h5>
+                            <br> 
+                        </div>
+                        
+                        <div class="modal-body">
+                            <br>
+    
+                            <h3 class="text-center">
+                                <button class="btn btn-warning" onclick="getBlock(0)"> Mostrar Nodo Inicial</button>
+                            </h3>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-2">
+                                    <button class="btn btn-danger w-100" onclick="getBlock(-1)"> << Anterior</button>
+                                </div>
+                                <div class="col-8" id="show-block">
+                
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger w-100" onclick="getBlock(1)"> Siguiente >></button>
+                                </div>
+                            </div>
+
+                            <br>
+                        </div>
+
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
+        </div>
+        <br>
+
+
       
     </div>
 
@@ -257,6 +307,7 @@
 
   <script src="./js/lib/cycle.js"></script>
   <script src="./js/structures/graph.js"></script>
+  <script src="./js/structures/block-chain.js"></script>
   <script src="./js/structures/avl-tree.js"></script>
   <script src="./js/structures/circular_list.js"></script>
   <script src="./js/structures/sparase-matrix.js"></script>

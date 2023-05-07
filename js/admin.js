@@ -3,6 +3,7 @@
 //--------------------------------------------------------------------------
 let avlTree = new AvlTree();
 let hashTable = new HashTable();
+let blockChain = new BlockChain();
 let archivos_compartidos = [];
 //--------------------------------------------------------------------------
 //                      FUNCIÓN PARA MANEJAR FORMULARIOS
@@ -35,9 +36,10 @@ function loadStudentsForm(e) {
             for(let i = 0; i < studentsArray.length; i++){
                 avlTree.insert(studentsArray[i]);
                 console.log(avlTree.root.height)
-                avlTree.estudiantes.push(studentsArray[i].carnet);
+                avlTree.estudiantes.push({carnet: studentsArray[i].carnet, nombre: studentsArray[i].nombre});
             }
             // GUARDAR EN LOCAL STORAGE
+            localStorage.setItem("blockChain", JSON.stringify(JSON.decycle(blockChain)));
 
             localStorage.setItem("avlTree", JSON.stringify(avlTree))
             alert('Alumnos cargados con éxito!')
@@ -199,6 +201,47 @@ function showAvlGraph(){
     let body = `digraph G { ${avlTree.treeGraph()} }`
     console.log(body);
     $("#graph").attr("src", url + body);
+}
+
+function getBlock(index){
+
+    let BlockChain2 = JSON.retrocycle(JSON.parse(localStorage.getItem("blockChain")));
+
+    blockChain.head = BlockChain2.head;
+    blockChain.end = BlockChain2.end;
+    blockChain.size = BlockChain2.size;
+
+    if(index === 0){
+        let html = blockChain.blockReport(index);
+        if(html){
+            $('#show-block').html(html);
+        }
+    }else{
+        let currentBlock = Number($('#block-table').attr('name'));
+        
+        if(index < 0){ // MOSTRAR EL ANTERIOR
+            if(currentBlock - 1 < 0){
+                alert("No existen elementos anteriores");
+            }else{
+                let html = blockChain.blockReport(currentBlock - 1);
+                if(html){
+                    $('#show-block').html(html);
+                }
+            }
+
+        }else if(index > 0){ // MOSTRAR EL SIGUIENTE
+            if(currentBlock + 1 > blockChain.size ){
+                alert("No existen elementos siguientes");
+            }else{
+                let html = blockChain.blockReport(currentBlock + 1);
+                if(html){
+                    $('#show-block').html(html);
+                }
+            }
+        }
+    }
+    
+
 }
 
 
