@@ -177,13 +177,13 @@ class BlockChain{
         let counter = 0;
         let rango = "";
         while (temp.next != null) {
-        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash} <br/> Mensaje: ${temp.message}>];\n`;
+        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash} >];\n`;
         conn += `N${counter}->`;
         rango += `N${counter} `
         temp = temp.next;
         counter++;
         }
-        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash} <br/> Mensaje: ${temp.message}>];\n`;
+        nodes += `N${counter}[label=<Timestamp: ${temp.timestamp} <br/> Emisor: ${temp.carnet_transmitter} <br/> Receptor: ${temp.carnet_receiver} <br/> Previus Hash: ${temp.previusHash}>];\n`;
         conn += `N${counter}`;
         rango += `N${counter} `
     

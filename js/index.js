@@ -21,7 +21,7 @@ iniciar_sesion()
 
 
 let valorSpan = document.getElementById("valor_id");
-valorSpan.innerHTML = `${nombre_actual}`;
+valorSpan.innerHTML = `${nombre_actual + " - " + usuario_actual}`;
 
 
 
