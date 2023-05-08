@@ -81,6 +81,7 @@ function mostrarTablaPermisos(){
                 <td>${archivos_compartidos[i].ubicacion}</td>
                 <td> <a href="${url}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
                 <td>${archivos_compartidos[i].permisos}</td>
+                <td> <a class="btn btn-primary btn-sm" onclick="ver('${url}')">Vista Previa</a></td>             
             </tr>
             `;
 
@@ -93,6 +94,7 @@ function mostrarTablaPermisos(){
                 <td>${archivos_compartidos[i].ubicacion}</td>
                 <td> <a href="${archivos_compartidos[i].archivo.content}" download="descarga" class="btn btn-primary btn-sm">${archivos_compartidos[i].archivo.name}</a></td>
                 <td>${archivos_compartidos[i].permisos}</td>
+                <td> <a class="btn btn-primary btn-sm" onclick="ver('${archivos_compartidos[i].archivo.content}')">Vista Previa</a></td>
             </tr>
             `;
         }
@@ -102,6 +104,14 @@ function mostrarTablaPermisos(){
         row
     )
 }
+
+
+function ver(contenidoBase64) {
+    // Obtener el iframe
+    var iframe = document.getElementById('pdf-viewer');
+    iframe.src = contenidoBase64;
+}
+
 
 
 //--------------------------------------------------------------------------
